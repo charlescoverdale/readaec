@@ -7,11 +7,18 @@
 list_elections()
 }
 \value{
-A data frame with election year, date, event ID, and type.
+A data frame with one row per election, including columns
+\code{year}, \code{date}, \code{event_id}, \code{type}, and \code{has_downloads}. The
+\code{has_downloads} column is \code{TRUE} for years where AEC CSV downloads
+are available (2007 onwards). The 2001 and 2004 elections are listed
+for reference but their data cannot be fetched.
 }
 \description{
 List all available federal elections
 }
 \examples{
 list_elections()
+
+# Only years with downloadable data
+list_elections()[list_elections()$has_downloads, ]
 }
