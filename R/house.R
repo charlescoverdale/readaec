@@ -17,9 +17,11 @@ get_fp <- function(year) {
     division = divisionnm,
     division_id = divisionid,
     state = stateab,
-    candidate = candidatenm,
+    surname = surname,
+    given_name = givennm,
     party = partyab,
-    party_name = partynm
+    party_name = partynm,
+    total_votes = totalvotes
   )
   df$year <- year
   df
@@ -71,10 +73,11 @@ get_tcp <- function(year) {
     division = divisionnm,
     division_id = divisionid,
     state = stateab,
-    candidate = candidatenm,
+    surname = surname,
+    given_name = givennm,
     party = partyab,
     party_name = partynm,
-    elected = elected
+    total_votes = totalvotes
   )
   df$year <- year
   df
