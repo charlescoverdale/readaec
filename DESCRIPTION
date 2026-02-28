@@ -6,8 +6,9 @@ Authors@R:
            role = c("aut", "cre"))
 Description: Provides clean, tidy access to Australian Electoral Commission
     (AEC) federal election data. Includes results for the House of
-    Representatives and Senate from 2001 onwards, at division and polling
-    place level. Data is downloaded directly from the AEC and cached locally.
+    Representatives and Senate from 2007 onwards, at both division and polling
+    place level. Data is downloaded directly from the AEC on first use and
+    cached locally for subsequent calls.
 License: MIT + file LICENSE
 Encoding: UTF-8
 Language: en-AU
