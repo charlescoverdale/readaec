@@ -16,12 +16,15 @@ remotes::install_github("charlescoverdale/readaec")
 library(readaec)
 
 list_elections()
-#>   year event_id       date               type
-#> 1 2001    10822 2001-11-10            general
-#> 2 2004    12246 2004-10-09            general
+#>   year event_id       date               type has_downloads
+#> 1 2001    10822 2001-11-10            general         FALSE
+#> 2 2004    12246 2004-10-09            general         FALSE
+#> 3 2007    13745 2007-11-24            general          TRUE
 #> ...
-#> 9 2025    31496 2025-05-03            general
+#> 9 2025    31496 2025-05-03            general          TRUE
 ```
+
+AEC CSV downloads are available from 2007 onwards. The 2001 and 2004 elections are listed for reference but cannot be fetched.
 
 ## House of Representatives
 
@@ -90,6 +93,33 @@ bind_rows(
 ) |>
   filter(division == "Kooyong") |>
   select(year, alp_pct, lnp_pct, swing)
+```
+
+Or use `get_swing()` for a direct comparison:
+
+```r
+# National swing 2022 to 2025
+get_swing(2022, 2025)
+
+# Single seat
+get_swing(2019, 2025, division = "Richmond")
+
+# All Victorian seats
+get_swing(2019, 2022, state = "VIC")
+```
+
+## Vignette: Richmond electorate case study
+
+The package includes a worked example tracing the full electoral history of the Richmond electorate (NSW) from 2007 to 2025:
+
+- TPP trend over time
+- First preference breakdown by major party
+- Who won each election
+- How Richmond swung relative to the NSW average
+- Enrolment and turnout over time
+
+```r
+vignette("richmond-example", package = "readaec")
 ```
 
 ## Caching
