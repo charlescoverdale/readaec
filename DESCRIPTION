@@ -1,0 +1,29 @@
+Package: aecr
+Title: Access Australian Electoral Commission Data
+Version: 0.1.0
+Authors@R:
+    person("Charles", "Coverdale", email = "charlesfcoverdale@gmail.com",
+           role = c("aut", "cre"))
+Description: Provides clean, tidy access to Australian Electoral Commission
+    (AEC) federal election data. Includes results for the House of
+    Representatives and Senate from 2001 onwards, at division and polling
+    place level. Data is downloaded directly from the AEC and cached locally.
+License: MIT + file LICENSE
+Encoding: UTF-8
+Language: en-AU
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.3.3
+Imports:
+    httr2,
+    readr,
+    dplyr,
+    cli,
+    rappdirs,
+    glue
+Suggests:
+    ggplot2,
+    sf,
+    testthat (>= 3.0.0)
+Config/testthat/edition: 3
+URL: https://github.com/charlescoverdale/aecr
+BugReports: https://github.com/charlescoverdale/aecr/issues
