@@ -12,15 +12,24 @@ aec_elections <- data.frame(
     "general", "general", "general", "general", "general",
     "double_dissolution", "general", "general", "general"
   ),
+  # AEC CSV downloads are only available from 2007 onwards
+  has_downloads = c(FALSE, FALSE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE),
   stringsAsFactors = FALSE
 )
 
 #' List all available federal elections
 #'
-#' @return A data frame with election year, date, event ID, and type.
+#' @return A data frame with one row per election, including columns
+#'   `year`, `date`, `event_id`, `type`, and `has_downloads`. The
+#'   `has_downloads` column is `TRUE` for years where AEC CSV downloads
+#'   are available (2007 onwards). The 2001 and 2004 elections are listed
+#'   for reference but their data cannot be fetched.
 #' @export
 #' @examples
 #' list_elections()
+#'
+#' # Only years with downloadable data
+#' list_elections()[list_elections()$has_downloads, ]
 list_elections <- function() {
   aec_elections
 }
@@ -33,7 +42,13 @@ year_to_event_id <- function(year) {
       "Year {year} is not a valid election year. Use {.fn list_elections} to see available years."
     )
   }
-  aec_elections$event_id[aec_elections$year == year]
+  row <- aec_elections[aec_elections$year == year, ]
+  if (!row$has_downloads) {
+    cli::cli_abort(
+      "AEC CSV downloads are not available for {year}. Data is only available from 2007 onwards."
+    )
+  }
+  row$event_id
 }
 
 #' @keywords internal
