@@ -125,6 +125,16 @@ Downloaded files are cached locally so repeated calls are instant. To clear the 
 clear_cache()
 ```
 
+## Related projects
+
+The Australian election data ecosystem is small but well-tended. Here's how the main sources fit together:
+
+**[eechidna](https://github.com/jforbes14/eechidna)** covers federal House of Representatives elections from 2001 to 2022, bundled directly into R as ready-to-use data frames. Its killer feature is the census join — ABS demographic variables apportioned to electoral boundaries, enabling socio-economic analysis that goes beyond the vote count. It doesn't cover the Senate, stops at 2022, and requires a package update for each new election. `readaec` and `eechidna` are complementary: use `eechidna` for census-linked analysis of the Howard-to-Morrison era, use `readaec` for anything current or Senate-related.
+
+**[The Tally Room](https://www.tallyroom.com.au/data)** — run by psephologist Ben Raue — fills the gap that neither `readaec` nor `eechidna` touches: state and territory elections. Ben publishes clean booth-level CSVs for NSW, VIC, QLD, WA, SA, TAS, ACT, NT, and New Zealand, in a consistent format with lat/lon coordinates. Recent elections are free; a back-catalogue going to roughly 2001 across all jurisdictions is available via Patreon. If you want to study state politics at the same resolution as federal politics, Ben's data is essentially the only structured source that exists.
+
+**[Adam Carr's Psephos](http://psephos.adam-carr.net/)** is the historical record of last resort — federal and state results back to 1901, maintained by one person over decades. The data is in plain text and HTML rather than machine-readable CSVs, but the depth is unmatched. [David Barry](https://pappubahry.com/pseph/aus_stats/data/) has done the hard work of combining Psephos with AEC digital records into a cleaner series from 1901 to the present, which is the better starting point for anyone wanting pre-2007 federal data in a usable format.
+
 ## Data source
 
 All data comes directly from the [Australian Electoral Commission](https://www.aec.gov.au/). Please respect their terms of use.
