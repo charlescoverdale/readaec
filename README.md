@@ -8,13 +8,15 @@ The catch is that each election has its own URL structure built around an intern
 
 `readaec` wraps the AEC's CSV downloads in a consistent, tidy interface. One function call returns a clean data frame. Results are cached locally so you're not hitting the AEC's servers on every call. It covers all federal elections from 2007 to 2025, including the Senate.
 
-## Pre-2007 data
+## Related projects
 
-For elections before 2007, the AEC provides ZIP archives for the 1993, 1996, and 1998 elections via their [statistics download page](https://www.aec.gov.au/elections/federal_elections/Stats_CDRom.htm). These contain polling place-level results for both chambers but are packaged as legacy fixed-width files designed for an early-2000s database application — usable, but not without effort. The 2001 and 2004 elections have no equivalent structured download.
+`readaec` covers federal elections from 2007 onwards. For everything outside that scope, here's where to look.
 
-For a cleaner experience, the [`eechidna`](https://github.com/jforbes14/eechidna) package bundles House of Representatives data from 2001 to 2022 as ready-to-use R data frames, alongside ABS census variables apportioned to electoral boundaries. It remains the best option for that period and for any analysis combining election results with socio-demographic data.
+**Federal elections, 2001–2022: [`eechidna`](https://github.com/jforbes14/eechidna)** bundles House of Representatives results from 2001 to 2022 as ready-to-use R data frames. Its standout feature is the census join — ABS demographic variables apportioned to electoral boundaries — making it the best option for socio-economic analysis of the Howard-to-Morrison era. It doesn't cover the Senate and stops at 2022. `readaec` and `eechidna` are complementary rather than competing.
 
-For anything before 2001, [Adam Carr's Psephos archive](http://psephos.adam-carr.net/) is the canonical source — covering federal and state elections back to 1901 in plain-text format. David Barry has also compiled a cleaned series from 1901 to the present at [pappubahry.com](https://pappubahry.com/pseph/aus_stats/data/), combining Psephos with AEC digital records into a more analysis-friendly format.
+**Federal elections, pre-2001:** The AEC provides ZIP archives for the 1993, 1996, and 1998 elections via their [statistics download page](https://www.aec.gov.au/elections/federal_elections/Stats_CDRom.htm), packaged as legacy fixed-width files — usable but not pleasant. For anything earlier, [Adam Carr's Psephos archive](http://psephos.adam-carr.net/) is the canonical source, covering federal results back to 1901 in plain-text format. [David Barry](https://pappubahry.com/pseph/aus_stats/data/) has done the hard work of combining Psephos with AEC digital records into a cleaner, more analysis-friendly series from 1901 to the present.
+
+**State and territory elections: [The Tally Room](https://www.tallyroom.com.au/data)** — run by psephologist Ben Raue — covers what neither `readaec` nor `eechidna` touches. Ben publishes clean booth-level CSVs for NSW, VIC, QLD, WA, SA, TAS, ACT, NT, and New Zealand, with lat/lon coordinates and a consistent format across jurisdictions. Recent elections are free; a back-catalogue going to roughly 2001 is available via Patreon. If you want state politics at the same resolution as federal politics, Ben's data is essentially the only structured source that exists.
 
 ## Installation
 
@@ -124,16 +126,6 @@ Downloaded files are cached locally so repeated calls are instant. To clear the 
 ```r
 clear_cache()
 ```
-
-## Related projects
-
-The Australian election data ecosystem is small but well-tended. Here's how the main sources fit together:
-
-**[eechidna](https://github.com/jforbes14/eechidna)** covers federal House of Representatives elections from 2001 to 2022, bundled directly into R as ready-to-use data frames. Its killer feature is the census join — ABS demographic variables apportioned to electoral boundaries, enabling socio-economic analysis that goes beyond the vote count. It doesn't cover the Senate, stops at 2022, and requires a package update for each new election. `readaec` and `eechidna` are complementary: use `eechidna` for census-linked analysis of the Howard-to-Morrison era, use `readaec` for anything current or Senate-related.
-
-**[The Tally Room](https://www.tallyroom.com.au/data)** — run by psephologist Ben Raue — fills the gap that neither `readaec` nor `eechidna` touches: state and territory elections. Ben publishes clean booth-level CSVs for NSW, VIC, QLD, WA, SA, TAS, ACT, NT, and New Zealand, in a consistent format with lat/lon coordinates. Recent elections are free; a back-catalogue going to roughly 2001 across all jurisdictions is available via Patreon. If you want to study state politics at the same resolution as federal politics, Ben's data is essentially the only structured source that exists.
-
-**[Adam Carr's Psephos](http://psephos.adam-carr.net/)** is the historical record of last resort — federal and state results back to 1901, maintained by one person over decades. The data is in plain text and HTML rather than machine-readable CSVs, but the depth is unmatched. [David Barry](https://pappubahry.com/pseph/aus_stats/data/) has done the hard work of combining Psephos with AEC digital records into a cleaner series from 1901 to the present, which is the better starting point for anyone wanting pre-2007 federal data in a usable format.
 
 ## Data source
 
