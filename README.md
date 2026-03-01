@@ -1,10 +1,20 @@
 # readaec
 
+## Context
+
 The Australian Electoral Commission publishes detailed results for every federal election on their tally room at [results.aec.gov.au](https://results.aec.gov.au). For elections from 2007 onwards, this includes first preference votes, two-party preferred, two-candidate preferred, booth-level results, polling place coordinates, Senate counts, enrolment, and turnout — all available as CSV downloads updated live on election night.
 
 The catch is that each election has its own URL structure built around an internal event ID, column names shift between years without warning, and there is no API. Getting data out requires knowing the right URL pattern, handling inconsistencies across elections, and writing fresh code every time. Most analysts either rely on `eechidna` (which stops at 2019) or write one-off download scripts from scratch — meaning the 2022 and 2025 elections sit largely outside the reach of standard tools.
 
 `readaec` wraps the AEC's CSV downloads in a consistent, tidy interface. One function call returns a clean data frame. Results are cached locally so you're not hitting the AEC's servers on every call. It covers all federal elections from 2007 to 2025, including the Senate.
+
+## Pre-2007 data
+
+For elections before 2007, the AEC provides ZIP archives for the 1993, 1996, and 1998 elections via their [statistics download page](https://www.aec.gov.au/elections/federal_elections/Stats_CDRom.htm). These contain polling place-level results for both chambers but are packaged as legacy fixed-width files designed for an early-2000s database application — usable, but not without effort. The 2001 and 2004 elections have no equivalent structured download.
+
+For a cleaner experience, the [`eechidna`](https://github.com/jforbes14/eechidna) package bundles House of Representatives data from 2001 to 2022 as ready-to-use R data frames, alongside ABS census variables apportioned to electoral boundaries. It remains the best option for that period and for any analysis combining election results with socio-demographic data.
+
+For anything before 2001, [Adam Carr's Psephos archive](http://psephos.adam-carr.net/) is the canonical source — covering federal and state elections back to 1901 in plain-text format. An independent researcher has also compiled a cleaned series from 1901 to the present at [pappubahry.com](https://pappubahry.com/pseph/aus_stats/data/), combining Psephos with AEC digital records into a more analysis-friendly format.
 
 ## Installation
 
