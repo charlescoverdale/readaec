@@ -2,21 +2,35 @@
 
 ## Test environments
 
-* macOS 14 (aarch64), R 4.5.0 — local
+* macOS 15 Sequoia (aarch64), R 4.5.2 — local
 * win-builder (R-devel) — remote
 * GitHub Actions: ubuntu-latest, R release
 
 ## R CMD check results
 
-0 errors | 0 warnings | 1 note
+0 errors | 0 warnings | 3 notes
 
-The one NOTE is:
+### NOTE 1: New submission
 
-    checking for hidden files and directories ... NOTE
-    Found the following hidden files and directories: .github
+    Maintainer: 'Charles Coverdale <charlesfcoverdale@gmail.com>'
+    New submission
 
-This is expected. `.github` contains only CI workflow files and is excluded
-from the build tarball via `.Rbuildignore`.
+Expected for a first CRAN submission.
+
+### NOTE 2: pandoc not installed locally
+
+    checking top-level files ... NOTE
+    Files 'README.md' or 'NEWS.md' cannot be checked without 'pandoc' being installed.
+
+Local environment does not have pandoc in PATH. CRAN's check servers have pandoc
+installed and will check these files without issue.
+
+### NOTE 3: Old HTML Tidy
+
+    checking HTML version of manual ... NOTE
+    Skipping checking HTML validation: 'tidy' doesn't look like recent enough HTML Tidy.
+
+Local HTML Tidy binary is outdated. CRAN's check servers run a current version.
 
 ## Notes on internet access
 
