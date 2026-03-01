@@ -14,7 +14,7 @@ For elections before 2007, the AEC provides ZIP archives for the 1993, 1996, and
 
 For a cleaner experience, the [`eechidna`](https://github.com/jforbes14/eechidna) package bundles House of Representatives data from 2001 to 2022 as ready-to-use R data frames, alongside ABS census variables apportioned to electoral boundaries. It remains the best option for that period and for any analysis combining election results with socio-demographic data.
 
-For anything before 2001, [Adam Carr's Psephos archive](http://psephos.adam-carr.net/) is the canonical source — covering federal and state elections back to 1901 in plain-text format. An independent researcher has also compiled a cleaned series from 1901 to the present at [pappubahry.com](https://pappubahry.com/pseph/aus_stats/data/), combining Psephos with AEC digital records into a more analysis-friendly format.
+For anything before 2001, [Adam Carr's Psephos archive](http://psephos.adam-carr.net/) is the canonical source — covering federal and state elections back to 1901 in plain-text format. David Barry has also compiled a cleaned series from 1901 to the present at [pappubahry.com](https://pappubahry.com/pseph/aus_stats/data/), combining Psephos with AEC digital records into a more analysis-friendly format.
 
 ## Installation
 
