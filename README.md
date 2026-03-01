@@ -1,8 +1,10 @@
 # readaec
 
-An R package for accessing Australian Electoral Commission (AEC) federal election data. Results for the House of Representatives and Senate from 2007 onwards, at both division and polling place level.
+The Australian Electoral Commission publishes detailed results for every federal election on their tally room at [results.aec.gov.au](https://results.aec.gov.au). For elections from 2007 onwards, this includes first preference votes, two-party preferred, two-candidate preferred, booth-level results, polling place coordinates, Senate counts, enrolment, and turnout — all available as CSV downloads updated live on election night.
 
-Data is downloaded directly from the AEC and cached locally so you're not hitting their servers on every call.
+The catch is that each election has its own URL structure built around an internal event ID, column names shift between years without warning, and there is no API. Getting data out requires knowing the right URL pattern, handling inconsistencies across elections, and writing fresh code every time. Most analysts either rely on `eechidna` (which stops at 2019) or write one-off download scripts from scratch — meaning the 2022 and 2025 elections sit largely outside the reach of standard tools.
+
+`readaec` wraps the AEC's CSV downloads in a consistent, tidy interface. One function call returns a clean data frame. Results are cached locally so you're not hitting the AEC's servers on every call. It covers all federal elections from 2007 to 2025, including the Senate.
 
 ## Installation
 
@@ -105,20 +107,6 @@ get_swing(2019, 2025, division = "Richmond")
 get_swing(2019, 2022, state = "VIC")
 ```
 
-## Vignette: Richmond electorate case study
-
-The package includes a worked example tracing the full electoral history of the Richmond electorate (NSW) from 2007 to 2025:
-
-- TPP trend over time
-- First preference breakdown by major party
-- Who won each election
-- How Richmond swung relative to the NSW average
-- Enrolment and turnout over time
-
-```r
-vignette("richmond-example", package = "readaec")
-```
-
 ## Caching
 
 Downloaded files are cached locally so repeated calls are instant. To clear the cache:
@@ -126,15 +114,6 @@ Downloaded files are cached locally so repeated calls are instant. To clear the 
 ```r
 clear_cache()
 ```
-
-## Compared to eechidna
-
-[eechidna](https://github.com/jforbes14/eechidna) is a great package for Australian election data. `readaec` differs in a few ways:
-
-- **Always current** — pulls live from the AEC, so 2025 data is available immediately
-- **Booth-level data** — eechidna works at division level only
-- **Senate** — eechidna is almost entirely House focused
-- **Function-based API** — `get_tpp(2025)` rather than `data(tpp22)`
 
 ## Data source
 
