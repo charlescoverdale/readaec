@@ -1,6 +1,6 @@
 # readaec
 
-An R package for accessing Australian Electoral Commission (AEC) federal election data. Results for the House of Representatives and Senate from 2001 onwards, at both division and polling place level.
+An R package for accessing Australian Electoral Commission (AEC) federal election data. Results for the House of Representatives and Senate from 2007 onwards, at both division and polling place level.
 
 Data is downloaded directly from the AEC and cached locally so you're not hitting their servers on every call.
 
@@ -17,14 +17,11 @@ library(readaec)
 
 list_elections()
 #>   year event_id       date               type has_downloads
-#> 1 2001    10822 2001-11-10            general         FALSE
-#> 2 2004    12246 2004-10-09            general         FALSE
-#> 3 2007    13745 2007-11-24            general          TRUE
+#> 1 2007    13745 2007-11-24            general          TRUE
+#> 2 2010    15508 2010-08-21            general          TRUE
 #> ...
-#> 9 2025    31496 2025-05-03            general          TRUE
+#> 7 2025    31496 2025-05-03            general          TRUE
 ```
-
-AEC CSV downloads are available from 2007 onwards. The 2001 and 2004 elections are listed for reference but cannot be fetched.
 
 ## House of Representatives
 
