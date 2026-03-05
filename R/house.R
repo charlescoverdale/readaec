@@ -6,7 +6,7 @@
 #' @return A tidy data frame of first preference votes by division.
 #' @export
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' get_fp(2022)
 #' }
 get_fp <- function(year) {
@@ -33,7 +33,7 @@ get_fp <- function(year) {
 #' @return A tidy data frame of TPP votes by division.
 #' @export
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' get_tpp(2022)
 #' }
 get_tpp <- function(year) {
@@ -62,7 +62,7 @@ get_tpp <- function(year) {
 #' @return A tidy data frame of TCP votes by division.
 #' @export
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' get_tcp(2022)
 #' }
 get_tcp <- function(year) {
@@ -90,7 +90,7 @@ get_tcp <- function(year) {
 #' @return A tidy data frame of first preference votes by polling place.
 #' @export
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' get_fp_by_booth(2022, state = "VIC")
 #' }
 get_fp_by_booth <- function(year, state = NULL) {
@@ -136,7 +136,7 @@ get_fp_by_booth <- function(year, state = NULL) {
 #' @return A tidy data frame of TPP votes by polling place.
 #' @export
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' get_tpp_by_booth(2022)
 #' }
 get_tpp_by_booth <- function(year) {
@@ -153,7 +153,7 @@ get_tpp_by_booth <- function(year) {
 #' @return A tidy data frame of elected members.
 #' @export
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' get_members_elected(2022)
 #' }
 get_members_elected <- function(year) {

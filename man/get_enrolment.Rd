@@ -16,7 +16,7 @@ A tidy data frame of enrolment figures by division.
 Get enrolment by division
 }
 \examples{
-\dontrun{
+\donttest{
 get_enrolment(2022)
 }
 }

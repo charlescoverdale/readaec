@@ -16,7 +16,7 @@ A tidy data frame of TPP votes by polling place.
 Get two-party preferred votes by polling place
 }
 \examples{
-\dontrun{
+\donttest{
 get_tpp_by_booth(2022)
 }
 }

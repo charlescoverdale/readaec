@@ -6,7 +6,7 @@
 #' @return A tidy data frame of Senate first preference votes by state.
 #' @export
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' get_senate(2022)
 #' }
 get_senate <- function(year) {

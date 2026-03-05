@@ -16,7 +16,7 @@ A tidy data frame of TCP votes by division.
 Get two-candidate preferred votes by division
 }
 \examples{
-\dontrun{
+\donttest{
 get_tcp(2022)
 }
 }

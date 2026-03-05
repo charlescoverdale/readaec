@@ -6,11 +6,16 @@
 \usage{
 clear_cache()
 }
+\value{
+Invisibly returns \code{NULL}. Called for its side effect of deleting
+cached files.
+}
 \description{
-Clear the local AEC data cache
+Deletes all files downloaded and cached by readaec. The next function call
+will re-download fresh data from the AEC.
 }
 \examples{
-\dontrun{
+\donttest{
 clear_cache()
 }
 }

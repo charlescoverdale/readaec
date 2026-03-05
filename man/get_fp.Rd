@@ -16,7 +16,7 @@ A tidy data frame of first preference votes by division.
 Get first preference votes by division
 }
 \examples{
-\dontrun{
+\donttest{
 get_fp(2022)
 }
 }

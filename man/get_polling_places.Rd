@@ -18,7 +18,7 @@ A tidy data frame of polling places with lat/lon coordinates.
 Returns all polling place addresses and coordinates for a given election.
 }
 \examples{
-\dontrun{
+\donttest{
 get_polling_places(2022)
 get_polling_places(2022, division = "Kooyong")
 }

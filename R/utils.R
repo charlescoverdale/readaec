@@ -32,9 +32,15 @@ aec_fetch <- function(event_id, filename) {
 
 #' Clear the local AEC data cache
 #'
+#' Deletes all files downloaded and cached by readaec. The next function call
+#' will re-download fresh data from the AEC.
+#'
+#' @return Invisibly returns `NULL`. Called for its side effect of deleting
+#'   cached files.
+#'
 #' @export
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' clear_cache()
 #' }
 clear_cache <- function() {

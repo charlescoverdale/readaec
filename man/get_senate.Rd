@@ -16,7 +16,7 @@ A tidy data frame of Senate first preference votes by state.
 Get Senate first preference votes by state
 }
 \examples{
-\dontrun{
+\donttest{
 get_senate(2022)
 }
 }

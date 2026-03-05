@@ -7,7 +7,7 @@
 #' @return A tidy data frame of candidates.
 #' @export
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' get_candidates(2022)
 #' get_candidates(2022, chamber = "senate")
 #' }
@@ -33,7 +33,7 @@ get_candidates <- function(year, chamber = "house") {
 #' @return A tidy data frame of polling places with lat/lon coordinates.
 #' @export
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' get_polling_places(2022)
 #' get_polling_places(2022, division = "Kooyong")
 #' }
@@ -59,7 +59,7 @@ get_polling_places <- function(year, division = NULL) {
 #' @return A tidy data frame of enrolment figures by division.
 #' @export
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' get_enrolment(2022)
 #' }
 get_enrolment <- function(year) {
@@ -76,7 +76,7 @@ get_enrolment <- function(year) {
 #' @return A tidy data frame of turnout figures by division.
 #' @export
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' get_turnout(2022)
 #' }
 get_turnout <- function(year) {

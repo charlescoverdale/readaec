@@ -16,7 +16,7 @@ A tidy data frame of elected members.
 Get members elected to the House of Representatives
 }
 \examples{
-\dontrun{
+\donttest{
 get_members_elected(2022)
 }
 }

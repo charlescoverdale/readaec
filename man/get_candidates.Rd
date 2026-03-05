@@ -18,7 +18,7 @@ A tidy data frame of candidates.
 Get all candidates for an election
 }
 \examples{
-\dontrun{
+\donttest{
 get_candidates(2022)
 get_candidates(2022, chamber = "senate")
 }

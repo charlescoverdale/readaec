@@ -36,7 +36,7 @@ divisions correctly. Divisions that don't appear in both elections are
 flagged rather than silently dropped.
 }
 \examples{
-\dontrun{
+\donttest{
 # National swing 2019 to 2022
 get_swing(2019, 2022)
 

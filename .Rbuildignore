@@ -3,3 +3,4 @@
 ^readaec\.Rcheck$
 ^readaec_.*\.tar\.gz$
 ^cran-comments\.md$
+^CRAN-SUBMISSION$

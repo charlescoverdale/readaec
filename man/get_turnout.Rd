@@ -16,7 +16,7 @@ A tidy data frame of turnout figures by division.
 Get turnout by division
 }
 \examples{
-\dontrun{
+\donttest{
 get_turnout(2022)
 }
 }

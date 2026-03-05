@@ -16,7 +16,7 @@ A tidy data frame of TPP votes by division.
 Get two-party preferred votes by division
 }
 \examples{
-\dontrun{
+\donttest{
 get_tpp(2022)
 }
 }

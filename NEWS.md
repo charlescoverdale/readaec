@@ -1,3 +1,9 @@
+# readaec 0.1.1
+
+* Added AEC web service URL to DESCRIPTION per CRAN policy
+* Added `\value` documentation to `clear_cache()`
+* Changed `\dontrun{}` to `\donttest{}` in all examples that require a network connection
+
 # readaec 0.1.0
 
 * Initial CRAN release.

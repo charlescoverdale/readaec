@@ -18,7 +18,7 @@ A tidy data frame of first preference votes by polling place.
 Get first preference votes by polling place
 }
 \examples{
-\dontrun{
+\donttest{
 get_fp_by_booth(2022, state = "VIC")
 }
 }

@@ -27,7 +27,7 @@
 #'
 #' @export
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' # National swing 2019 to 2022
 #' get_swing(2019, 2022)
 #'
