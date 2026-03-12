@@ -23,7 +23,11 @@ The catch is that each election has its own URL structure built around an intern
 ## Installation
 
 ```r
-remotes::install_github("charlescoverdale/readaec")
+install.packages("readaec")
+
+# Or install the development version from GitHub
+# install.packages("devtools")
+devtools::install_github("charlescoverdale/readaec")
 ```
 
 ## What's available
