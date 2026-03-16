@@ -17,6 +17,8 @@ Get turnout by division
 }
 \examples{
 \donttest{
+op <- options(readaec.cache_dir = tempdir())
 get_turnout(2022)
+options(op)
 }
 }

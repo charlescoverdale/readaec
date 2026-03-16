@@ -7,7 +7,9 @@
 #' @export
 #' @examples
 #' \donttest{
+#' op <- options(readaec.cache_dir = tempdir())
 #' get_senate(2022)
+#' options(op)
 #' }
 get_senate <- function(year) {
   event_id <- year_to_event_id(year)

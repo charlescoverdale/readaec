@@ -8,8 +8,10 @@
 #' @export
 #' @examples
 #' \donttest{
+#' op <- options(readaec.cache_dir = tempdir())
 #' get_candidates(2022)
 #' get_candidates(2022, chamber = "senate")
+#' options(op)
 #' }
 get_candidates <- function(year, chamber = "house") {
   event_id <- year_to_event_id(year)
@@ -34,8 +36,10 @@ get_candidates <- function(year, chamber = "house") {
 #' @export
 #' @examples
 #' \donttest{
+#' op <- options(readaec.cache_dir = tempdir())
 #' get_polling_places(2022)
 #' get_polling_places(2022, division = "Kooyong")
+#' options(op)
 #' }
 get_polling_places <- function(year, division = NULL) {
   event_id <- year_to_event_id(year)
@@ -60,7 +64,9 @@ get_polling_places <- function(year, division = NULL) {
 #' @export
 #' @examples
 #' \donttest{
+#' op <- options(readaec.cache_dir = tempdir())
 #' get_enrolment(2022)
+#' options(op)
 #' }
 get_enrolment <- function(year) {
   event_id <- year_to_event_id(year)
@@ -77,7 +83,9 @@ get_enrolment <- function(year) {
 #' @export
 #' @examples
 #' \donttest{
+#' op <- options(readaec.cache_dir = tempdir())
 #' get_turnout(2022)
+#' options(op)
 #' }
 get_turnout <- function(year) {
   event_id <- year_to_event_id(year)

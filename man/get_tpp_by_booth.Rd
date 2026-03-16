@@ -17,6 +17,8 @@ Get two-party preferred votes by polling place
 }
 \examples{
 \donttest{
+op <- options(readaec.cache_dir = tempdir())
 get_tpp_by_booth(2022)
+options(op)
 }
 }

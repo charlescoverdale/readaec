@@ -7,7 +7,9 @@
 #' @export
 #' @examples
 #' \donttest{
+#' op <- options(readaec.cache_dir = tempdir())
 #' get_fp(2022)
+#' options(op)
 #' }
 get_fp <- function(year) {
   event_id <- year_to_event_id(year)
@@ -34,7 +36,9 @@ get_fp <- function(year) {
 #' @export
 #' @examples
 #' \donttest{
+#' op <- options(readaec.cache_dir = tempdir())
 #' get_tpp(2022)
+#' options(op)
 #' }
 get_tpp <- function(year) {
   event_id <- year_to_event_id(year)
@@ -63,7 +67,9 @@ get_tpp <- function(year) {
 #' @export
 #' @examples
 #' \donttest{
+#' op <- options(readaec.cache_dir = tempdir())
 #' get_tcp(2022)
+#' options(op)
 #' }
 get_tcp <- function(year) {
   event_id <- year_to_event_id(year)
@@ -91,7 +97,9 @@ get_tcp <- function(year) {
 #' @export
 #' @examples
 #' \donttest{
+#' op <- options(readaec.cache_dir = tempdir())
 #' get_fp_by_booth(2022, state = "VIC")
+#' options(op)
 #' }
 get_fp_by_booth <- function(year, state = NULL) {
   event_id <- year_to_event_id(year)
@@ -137,7 +145,9 @@ get_fp_by_booth <- function(year, state = NULL) {
 #' @export
 #' @examples
 #' \donttest{
+#' op <- options(readaec.cache_dir = tempdir())
 #' get_tpp_by_booth(2022)
+#' options(op)
 #' }
 get_tpp_by_booth <- function(year) {
   event_id <- year_to_event_id(year)
@@ -154,7 +164,9 @@ get_tpp_by_booth <- function(year) {
 #' @export
 #' @examples
 #' \donttest{
+#' op <- options(readaec.cache_dir = tempdir())
 #' get_members_elected(2022)
+#' options(op)
 #' }
 get_members_elected <- function(year) {
   event_id <- year_to_event_id(year)

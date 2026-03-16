@@ -19,7 +19,9 @@ Get all candidates for an election
 }
 \examples{
 \donttest{
+op <- options(readaec.cache_dir = tempdir())
 get_candidates(2022)
 get_candidates(2022, chamber = "senate")
+options(op)
 }
 }

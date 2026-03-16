@@ -1,3 +1,10 @@
+# readaec 0.1.2
+
+* Examples now cache to `tempdir()` instead of the user's home directory,
+  fixing CRAN policy compliance for `\donttest` examples.
+* Cache directory is now configurable via `options(readaec.cache_dir = ...)`.
+* Replaced `rappdirs` dependency with `tools::R_user_dir()` (base R).
+
 # readaec 0.1.1
 
 * Added AEC web service URL to DESCRIPTION per CRAN policy

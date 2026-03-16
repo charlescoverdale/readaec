@@ -37,6 +37,7 @@ flagged rather than silently dropped.
 }
 \examples{
 \donttest{
+op <- options(readaec.cache_dir = tempdir())
 # National swing 2019 to 2022
 get_swing(2019, 2022)
 
@@ -48,5 +49,6 @@ get_swing(2019, 2022, division = "Kooyong")
 
 # Long-run comparison
 get_swing(2013, 2025)
+options(op)
 }
 }

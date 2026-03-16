@@ -17,6 +17,8 @@ Get two-party preferred votes by division
 }
 \examples{
 \donttest{
+op <- options(readaec.cache_dir = tempdir())
 get_tpp(2022)
+options(op)
 }
 }

@@ -17,6 +17,8 @@ Get enrolment by division
 }
 \examples{
 \donttest{
+op <- options(readaec.cache_dir = tempdir())
 get_enrolment(2022)
+options(op)
 }
 }

@@ -17,6 +17,8 @@ Get first preference votes by division
 }
 \examples{
 \donttest{
+op <- options(readaec.cache_dir = tempdir())
 get_fp(2022)
+options(op)
 }
 }

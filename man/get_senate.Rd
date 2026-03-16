@@ -17,6 +17,8 @@ Get Senate first preference votes by state
 }
 \examples{
 \donttest{
+op <- options(readaec.cache_dir = tempdir())
 get_senate(2022)
+options(op)
 }
 }

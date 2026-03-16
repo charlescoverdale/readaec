@@ -17,6 +17,8 @@ Get members elected to the House of Representatives
 }
 \examples{
 \donttest{
+op <- options(readaec.cache_dir = tempdir())
 get_members_elected(2022)
+options(op)
 }
 }

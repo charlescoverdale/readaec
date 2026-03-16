@@ -2,7 +2,7 @@
 
 #' @keywords internal
 aec_cache_dir <- function() {
-  d <- file.path(rappdirs::user_cache_dir("aecr"))
+  d <- getOption("readaec.cache_dir", default = tools::R_user_dir("readaec", "cache"))
   if (!dir.exists(d)) dir.create(d, recursive = TRUE)
   d
 }
@@ -41,7 +41,9 @@ aec_fetch <- function(event_id, filename) {
 #' @export
 #' @examples
 #' \donttest{
+#' op <- options(readaec.cache_dir = tempdir())
 #' clear_cache()
+#' options(op)
 #' }
 clear_cache <- function() {
   d <- aec_cache_dir()

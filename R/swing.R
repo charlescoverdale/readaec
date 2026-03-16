@@ -28,6 +28,7 @@
 #' @export
 #' @examples
 #' \donttest{
+#' op <- options(readaec.cache_dir = tempdir())
 #' # National swing 2019 to 2022
 #' get_swing(2019, 2022)
 #'
@@ -39,6 +40,7 @@
 #'
 #' # Long-run comparison
 #' get_swing(2013, 2025)
+#' options(op)
 #' }
 get_swing <- function(from, to, division = NULL, state = NULL) {
   if (from >= to) {

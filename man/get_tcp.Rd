@@ -17,6 +17,8 @@ Get two-candidate preferred votes by division
 }
 \examples{
 \donttest{
+op <- options(readaec.cache_dir = tempdir())
 get_tcp(2022)
+options(op)
 }
 }

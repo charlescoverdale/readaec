@@ -19,7 +19,9 @@ Returns all polling place addresses and coordinates for a given election.
 }
 \examples{
 \donttest{
+op <- options(readaec.cache_dir = tempdir())
 get_polling_places(2022)
 get_polling_places(2022, division = "Kooyong")
+options(op)
 }
 }

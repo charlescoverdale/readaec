@@ -16,6 +16,8 @@ will re-download fresh data from the AEC.
 }
 \examples{
 \donttest{
+op <- options(readaec.cache_dir = tempdir())
 clear_cache()
+options(op)
 }
 }

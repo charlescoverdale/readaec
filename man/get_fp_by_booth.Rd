@@ -19,6 +19,8 @@ Get first preference votes by polling place
 }
 \examples{
 \donttest{
+op <- options(readaec.cache_dir = tempdir())
 get_fp_by_booth(2022, state = "VIC")
+options(op)
 }
 }
