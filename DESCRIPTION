@@ -1,6 +1,6 @@
 Package: readaec
 Title: Access Australian Electoral Commission Data
-Version: 0.1.2
+Version: 0.1.3
 Authors@R:
     person("Charles", "Coverdale", email = "charlesfcoverdale@gmail.com",
            role = c("aut", "cre"))

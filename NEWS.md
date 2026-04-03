@@ -1,3 +1,8 @@
+# readaec 0.1.3
+
+* Added HTTP status validation to `get_fp_by_booth()` for consistency with
+  other data functions.
+
 # readaec 0.1.2
 
 * Examples now cache to `tempdir()` instead of the user's home directory,

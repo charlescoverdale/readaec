@@ -120,6 +120,11 @@ get_fp_by_booth <- function(year, state = NULL) {
       cli::cli_inform("Downloading from AEC: {filename}")
       req <- httr2::request(url)
       resp <- httr2::req_perform(req)
+
+      if (httr2::resp_status(resp) != 200) {
+        cli::cli_abort("Failed to download {filename} (HTTP {httr2::resp_status(resp)})")
+      }
+
       writeBin(httr2::resp_body_raw(resp), cache_file)
     }
     df <- readr::read_csv(cache_file, skip = 1, show_col_types = FALSE)
