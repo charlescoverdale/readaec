@@ -1,0 +1,9 @@
+url: https://charlescoverdale.github.io/readaec/
+
+template:
+  bootstrap: 5
+
+navbar:
+  structure:
+    left:  [intro, reference, articles, news]
+    right: [search, github]
