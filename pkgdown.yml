@@ -1,0 +1,9 @@
+pandoc: 3.1.11
+pkgdown: 2.2.0
+pkgdown_sha: ~
+articles:
+  richmond-example: richmond-example.html
+last_built: 2026-04-24T13:50Z
+urls:
+  reference: https://charlescoverdale.github.io/readaec/reference
+  article: https://charlescoverdale.github.io/readaec/articles
