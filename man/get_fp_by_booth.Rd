@@ -4,12 +4,15 @@
 \alias{get_fp_by_booth}
 \title{Get first preference votes by polling place}
 \usage{
-get_fp_by_booth(year, state = NULL)
+get_fp_by_booth(year, state = NULL, refresh = FALSE)
 }
 \arguments{
 \item{year}{Election year. Use \code{\link[=list_elections]{list_elections()}} to see available years.}
 
 \item{state}{Filter to a specific state (e.g. "VIC"). NULL returns all states.}
+
+\item{refresh}{If \code{TRUE}, re-download from the AEC even if a cached copy
+exists. Useful on election night when counts are still updating.}
 }
 \value{
 A tidy data frame of first preference votes by polling place.

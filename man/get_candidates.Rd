@@ -4,12 +4,15 @@
 \alias{get_candidates}
 \title{Get all candidates for an election}
 \usage{
-get_candidates(year, chamber = "house")
+get_candidates(year, chamber = "house", refresh = FALSE)
 }
 \arguments{
 \item{year}{Election year. Use \code{\link[=list_elections]{list_elections()}} to see available years.}
 
 \item{chamber}{"house" or "senate".}
+
+\item{refresh}{If \code{TRUE}, re-download from the AEC even if a cached copy
+exists.}
 }
 \value{
 A tidy data frame of candidates.

@@ -7,27 +7,56 @@ aec_cache_dir <- function() {
   d
 }
 
+#' Download a file from the AEC, with caching
+#'
+#' Downloads are written to a temporary file first and only moved into the
+#' cache once complete, so a failed download never leaves a corrupt file
+#' behind. Requests identify the package, retry on transient failures, and
+#' report HTTP errors with the status code.
+#'
 #' @keywords internal
-aec_fetch <- function(event_id, filename) {
-  url <- aec_url(event_id, filename)
-  cache_file <- file.path(aec_cache_dir(), paste0(filename, "-", event_id, ".csv"))
+aec_download <- function(url, basename, refresh = FALSE) {
+  cache_file <- file.path(aec_cache_dir(), basename)
 
-  if (file.exists(cache_file)) {
-    cli::cli_inform("Loading from cache: {filename}")
+  if (file.exists(cache_file) && !refresh) {
+    cli::cli_inform("Loading from cache: {basename}")
   } else {
-    cli::cli_inform("Downloading from AEC: {filename}")
+    cli::cli_inform("Downloading from AEC: {basename}")
     req <- httr2::request(url)
+    req <- httr2::req_user_agent(
+      req, "readaec R package (https://github.com/charlescoverdale/readaec)"
+    )
+    req <- httr2::req_retry(req, max_tries = 3)
+    # Disable httr2's default error-on-4xx/5xx so we can report the status
+    # code with a readable message instead of a raw httr2 condition
+    req <- httr2::req_error(req, is_error = function(resp) FALSE)
     resp <- httr2::req_perform(req)
 
     if (httr2::resp_status(resp) != 200) {
-      cli::cli_abort("Failed to download {filename} (HTTP {httr2::resp_status(resp)})")
+      cli::cli_abort(
+        "Failed to download {basename} (HTTP {httr2::resp_status(resp)})."
+      )
     }
 
-    writeBin(httr2::resp_body_raw(resp), cache_file)
+    tmp <- tempfile(tmpdir = aec_cache_dir(), fileext = ".part")
+    writeBin(httr2::resp_body_raw(resp), tmp)
+    file.rename(tmp, cache_file)
   }
 
-  # AEC CSVs have a metadata header row — skip it
-  readr::read_csv(cache_file, skip = 1, show_col_types = FALSE)
+  # AEC CSVs have a metadata header row — skip it. Guess column types from
+  # the whole file: some AEC files (e.g. polling places) only reveal a
+  # column's true type thousands of rows in
+  readr::read_csv(cache_file, skip = 1, show_col_types = FALSE,
+                  guess_max = Inf)
+}
+
+#' @keywords internal
+aec_fetch <- function(event_id, filename, refresh = FALSE) {
+  aec_download(
+    url = aec_url(event_id, filename),
+    basename = paste0(filename, "-", event_id, ".csv"),
+    refresh = refresh
+  )
 }
 
 #' Clear the local AEC data cache

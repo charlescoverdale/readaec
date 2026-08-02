@@ -4,12 +4,15 @@
 \alias{get_polling_places}
 \title{Get polling place locations}
 \usage{
-get_polling_places(year, division = NULL)
+get_polling_places(year, division = NULL, refresh = FALSE)
 }
 \arguments{
 \item{year}{Election year. Use \code{\link[=list_elections]{list_elections()}} to see available years.}
 
 \item{division}{Filter to a specific division name. NULL returns all.}
+
+\item{refresh}{If \code{TRUE}, re-download from the AEC even if a cached copy
+exists.}
 }
 \value{
 A tidy data frame of polling places with lat/lon coordinates.

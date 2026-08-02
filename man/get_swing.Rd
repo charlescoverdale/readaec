@@ -4,7 +4,7 @@
 \alias{get_swing}
 \title{Compare TPP results between two elections}
 \usage{
-get_swing(from, to, division = NULL, state = NULL)
+get_swing(from, to, division = NULL, state = NULL, refresh = FALSE)
 }
 \arguments{
 \item{from}{Election year to compare from. Use \code{\link[=list_elections]{list_elections()}} to see
@@ -15,6 +15,9 @@ available years.}
 \item{division}{Optionally filter to one or more division names.}
 
 \item{state}{Optionally filter to a state abbreviation (e.g. "VIC").}
+
+\item{refresh}{If \code{TRUE}, re-download from the AEC even if a cached copy
+exists.}
 }
 \value{
 A data frame with one row per division containing:
@@ -25,7 +28,8 @@ A data frame with one row per division containing:
 \item{lnp_pct_from, lnp_pct_to}{LNP TPP percentage in each election}
 \item{alp_swing}{Change in ALP TPP (positive = swing to ALP)}
 \item{lnp_swing}{Change in LNP TPP (positive = swing to LNP)}
-\item{winner_from, winner_to}{Winning party in each election}
+\item{winner_from, winner_to}{Party that won the seat in each election}
+\item{tpp_leader_from, tpp_leader_to}{Which of ALP/LNP led the TPP count}
 \item{seat_changed}{TRUE if the seat changed hands}
 \item{redistribution_flag}{TRUE if the division only appears in one election}
 }
@@ -34,6 +38,13 @@ Calculates the change in two-party preferred vote share between any two
 federal elections. Joins on division ID (not name) to handle renamed
 divisions correctly. Divisions that don't appear in both elections are
 flagged rather than silently dropped.
+}
+\details{
+The winner columns report the party that actually won the seat (from the
+AEC's members elected file), so crossbench seats are identified correctly.
+The TPP leader columns report which of ALP or the Coalition led the
+two-party preferred count, which is not the same thing in seats won by
+independents and minor parties.
 }
 \examples{
 \donttest{

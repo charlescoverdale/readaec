@@ -4,10 +4,13 @@
 \alias{get_members_elected}
 \title{Get members elected to the House of Representatives}
 \usage{
-get_members_elected(year)
+get_members_elected(year, refresh = FALSE)
 }
 \arguments{
 \item{year}{Election year. Use \code{\link[=list_elections]{list_elections()}} to see available years.}
+
+\item{refresh}{If \code{TRUE}, re-download from the AEC even if a cached copy
+exists. Useful on election night when counts are still updating.}
 }
 \value{
 A tidy data frame of elected members.

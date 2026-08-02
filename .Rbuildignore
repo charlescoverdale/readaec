@@ -4,3 +4,5 @@
 ^readaec_.*\.tar\.gz$
 ^cran-comments\.md$
 ^CRAN-SUBMISSION$
+^_pkgdown\.yml$
+^\.\.\.?Rcheck$

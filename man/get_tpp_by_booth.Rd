@@ -4,10 +4,13 @@
 \alias{get_tpp_by_booth}
 \title{Get two-party preferred votes by polling place}
 \usage{
-get_tpp_by_booth(year)
+get_tpp_by_booth(year, refresh = FALSE)
 }
 \arguments{
 \item{year}{Election year. Use \code{\link[=list_elections]{list_elections()}} to see available years.}
+
+\item{refresh}{If \code{TRUE}, re-download from the AEC even if a cached copy
+exists. Useful on election night when counts are still updating.}
 }
 \value{
 A tidy data frame of TPP votes by polling place.

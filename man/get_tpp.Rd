@@ -4,10 +4,13 @@
 \alias{get_tpp}
 \title{Get two-party preferred votes by division}
 \usage{
-get_tpp(year)
+get_tpp(year, refresh = FALSE)
 }
 \arguments{
 \item{year}{Election year. Use \code{\link[=list_elections]{list_elections()}} to see available years.}
+
+\item{refresh}{If \code{TRUE}, re-download from the AEC even if a cached copy
+exists. Useful on election night when counts are still updating.}
 }
 \value{
 A tidy data frame of TPP votes by division.

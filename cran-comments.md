@@ -1,19 +1,13 @@
-# CRAN submission comments — readaec 0.1.2
+# CRAN submission comments — readaec 0.2.0
 
-## Resubmission
+## Release summary
 
-This is a resubmission of readaec 0.1.1. Changes since 0.1.1:
-
-* Examples now cache to `tempdir()` instead of the user's home directory,
-  fixing CRAN policy compliance for `\donttest` examples.
-* Cache directory is now configurable via `options(readaec.cache_dir = ...)`.
-* Replaced `rappdirs` dependency with `tools::R_user_dir()` (base R).
-
-## Changes since 0.1.0 (addressing initial CRAN review feedback)
-
-* Added AEC web service URL `<https://results.aec.gov.au>` to DESCRIPTION
-* Added `\value` documentation to `clear_cache()`
-* Replaced `\dontrun{}` with `\donttest{}` in all network-dependent examples
+Feature release. Adds by-election results (24 House by-elections, 2008 to
+2026), 2023 referendum results, the full distribution of preferences,
+booth-level two-candidate preferred, and senators elected. Also fixes error
+handling on failed downloads, prevents interrupted downloads from leaving
+corrupt cache files, and corrects seat-winner identification in
+`get_swing()` for seats won by independents and minor parties.
 
 ## Test environments
 
@@ -30,7 +24,8 @@ Commission's public results website <https://results.aec.gov.au>. Files are
 cached locally using `tools::R_user_dir()` after the first download. All
 examples that make network requests are wrapped in `\donttest{}`, with
 caching redirected to `tempdir()` so that no files are written to the user's
-home filespace.
+home filespace. Network-dependent tests are skipped on CRAN via
+`skip_on_cran()`.
 
 ## Downstream dependencies
 

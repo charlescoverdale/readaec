@@ -1,7 +1,7 @@
 utils::globalVariables(c(
   # AEC raw column names
-  "divisionnm", "divisionid", "stateab", "partyab", "partynm",
-  "givennm", "surname", "totalvotes", "swing",
+  "divisionnm", "divisionname", "divisionid", "stateab", "partyab", "partynm",
+  "givennm", "surname", "totalvotes", "swing", "electedorder",
   "liberal/national coalition votes",
   "liberal/national coalition percentage",
   "australian labor party votes",
@@ -11,6 +11,7 @@ utils::globalVariables(c(
   "state.x", "state.y",
   "alp_pct_from", "alp_pct_to", "alp_swing",
   "lnp_pct_from", "lnp_pct_to", "lnp_swing",
-  "winner_from", "winner_to", "seat_changed",
+  "winner_from", "winner_to",
+  "tpp_leader_from", "tpp_leader_to", "seat_changed",
   "redistribution_flag", "year_from", "year_to"
 ))

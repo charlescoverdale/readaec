@@ -4,6 +4,8 @@
 #'
 #' @param year Election year. Use [list_elections()] to see available years.
 #' @param chamber "house" or "senate".
+#' @param refresh If `TRUE`, re-download from the AEC even if a cached copy
+#'   exists.
 #' @return A tidy data frame of candidates.
 #' @export
 #' @examples
@@ -13,14 +15,14 @@
 #' get_candidates(2022, chamber = "senate")
 #' options(op)
 #' }
-get_candidates <- function(year, chamber = "house") {
+get_candidates <- function(year, chamber = "house", refresh = FALSE) {
   event_id <- year_to_event_id(year)
   filename <- switch(chamber,
     "house"  = "HouseCandidatesDownload",
     "senate" = "SenateCandidatesDownload",
     cli::cli_abort("chamber must be 'house' or 'senate'")
   )
-  df <- aec_fetch(event_id, filename)
+  df <- aec_fetch(event_id, filename, refresh)
   df <- dplyr::rename_with(df, tolower)
   df$year <- year
   df
@@ -32,6 +34,8 @@ get_candidates <- function(year, chamber = "house") {
 #'
 #' @param year Election year. Use [list_elections()] to see available years.
 #' @param division Filter to a specific division name. NULL returns all.
+#' @param refresh If `TRUE`, re-download from the AEC even if a cached copy
+#'   exists.
 #' @return A tidy data frame of polling places with lat/lon coordinates.
 #' @export
 #' @examples
@@ -41,9 +45,9 @@ get_candidates <- function(year, chamber = "house") {
 #' get_polling_places(2022, division = "Kooyong")
 #' options(op)
 #' }
-get_polling_places <- function(year, division = NULL) {
+get_polling_places <- function(year, division = NULL, refresh = FALSE) {
   event_id <- year_to_event_id(year)
-  df <- aec_fetch(event_id, "GeneralPollingPlacesDownload")
+  df <- aec_fetch(event_id, "GeneralPollingPlacesDownload", refresh)
   df <- dplyr::rename_with(df, tolower)
   df$year <- year
 
@@ -59,7 +63,7 @@ get_polling_places <- function(year, division = NULL) {
 
 #' Get enrolment by division
 #'
-#' @param year Election year. Use [list_elections()] to see available years.
+#' @inheritParams get_fp
 #' @return A tidy data frame of enrolment figures by division.
 #' @export
 #' @examples
@@ -68,9 +72,9 @@ get_polling_places <- function(year, division = NULL) {
 #' get_enrolment(2022)
 #' options(op)
 #' }
-get_enrolment <- function(year) {
+get_enrolment <- function(year, refresh = FALSE) {
   event_id <- year_to_event_id(year)
-  df <- aec_fetch(event_id, "GeneralEnrolmentByDivisionDownload")
+  df <- aec_fetch(event_id, "GeneralEnrolmentByDivisionDownload", refresh)
   df <- dplyr::rename_with(df, tolower)
   df$year <- year
   df
@@ -78,7 +82,7 @@ get_enrolment <- function(year) {
 
 #' Get turnout by division
 #'
-#' @param year Election year. Use [list_elections()] to see available years.
+#' @inheritParams get_fp
 #' @return A tidy data frame of turnout figures by division.
 #' @export
 #' @examples
@@ -87,9 +91,9 @@ get_enrolment <- function(year) {
 #' get_turnout(2022)
 #' options(op)
 #' }
-get_turnout <- function(year) {
+get_turnout <- function(year, refresh = FALSE) {
   event_id <- year_to_event_id(year)
-  df <- aec_fetch(event_id, "HouseTurnoutByDivisionDownload")
+  df <- aec_fetch(event_id, "HouseTurnoutByDivisionDownload", refresh)
   df <- dplyr::rename_with(df, tolower)
   df$year <- year
   df
