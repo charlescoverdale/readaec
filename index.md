@@ -30,7 +30,9 @@ code every time.
 `readaec` wraps the AEC’s CSV downloads in a consistent, tidy interface.
 One function call returns a clean data frame. Results are cached locally
 so you’re not hitting the AEC’s servers on every call. It covers all
-federal elections from 2007 to 2025, including the Senate.
+federal elections from 2007 to 2025 (including the Senate), House
+by-elections from 2008 to the 2026 Farrer by-election, and the 2023
+referendum.
 
 ## Related projects
 
@@ -73,6 +75,7 @@ source that exists.
 ## Installation
 
 ``` r
+
 install.packages("readaec")
 
 # Or install the development version from GitHub
@@ -83,6 +86,7 @@ devtools::install_github("charlescoverdale/readaec")
 ## What’s available
 
 ``` r
+
 library(readaec)
 
 list_elections()
@@ -96,6 +100,7 @@ list_elections()
 ## House of Representatives
 
 ``` r
+
 # Two-party preferred by division
 get_tpp(2025)
 
@@ -115,6 +120,7 @@ get_turnout(2025)
 ## Polling place data
 
 ``` r
+
 # All polling places nationally (with lat/lon coordinates)
 get_polling_places(2025)
 
@@ -126,17 +132,79 @@ get_fp_by_booth(2025, state = "VIC")
 
 # TPP at booth level
 get_tpp_by_booth(2025)
+
+# TCP at booth level
+get_tcp_by_booth(2025)
+```
+
+## Distribution of preferences
+
+The full count-by-count preference distribution for every seat: each
+exclusion round and where the preferences flowed. This is the dataset
+for analysing seats won from second or third place, which TPP and TCP
+figures cannot show.
+
+``` r
+
+get_dop(2025)
 ```
 
 ## Senate
 
 ``` r
+
+# First preferences by state
 get_senate(2025)
+
+# Senators elected, in order of election
+get_senators_elected(2025)
+```
+
+## By-elections
+
+By-election results are published at polling place level. All 24 House
+by-elections with AEC CSV downloads are covered, from Gippsland 2008 to
+Farrer 2026.
+
+``` r
+
+list_by_elections()
+
+# First preferences by booth
+get_by_election_fp("Farrer")
+
+# Two-candidate preferred by booth (the count that decided Farrer in 2026)
+get_by_election_tcp("Farrer")
+
+# Divisions with two by-elections need a year
+get_by_election_tcp("Mayo", year = 2018)
+
+# Candidates
+get_by_election_candidates("Aston")
+```
+
+## Referendums
+
+Booth-level Yes/No results and turnout for the 2023 referendum on the
+Aboriginal and Torres Strait Islander Voice.
+
+``` r
+
+list_referendums()
+
+# Yes/No votes at every polling place
+get_referendum_by_booth(2023)
+get_referendum_by_booth(2023, state = "TAS")
+
+# Enrolment and turnout
+get_referendum_turnout(2023)
+get_referendum_turnout(2023, by = "state")
 ```
 
 ## Candidates & enrolment
 
 ``` r
+
 # Full candidate list
 get_candidates(2025)
 get_candidates(2025, chamber = "senate")
@@ -151,6 +219,7 @@ Because every function returns a consistent tidy data frame, combining
 elections is straightforward:
 
 ``` r
+
 library(dplyr)
 
 # How did Kooyong swing between 2019 and 2025?
@@ -168,6 +237,7 @@ Or use
 for a direct comparison:
 
 ``` r
+
 # National swing 2022 to 2025
 get_swing(2022, 2025)
 
@@ -184,7 +254,16 @@ Downloaded files are cached locally so repeated calls are instant. To
 clear the cache:
 
 ``` r
+
 clear_cache()
+```
+
+Every data function also takes `refresh = TRUE` to force a re-download,
+which matters on election night when cached counts go stale:
+
+``` r
+
+get_tpp(2025, refresh = TRUE)
 ```
 
 ## Data source

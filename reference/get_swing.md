@@ -8,7 +8,7 @@ flagged rather than silently dropped.
 ## Usage
 
 ``` r
-get_swing(from, to, division = NULL, state = NULL)
+get_swing(from, to, division = NULL, state = NULL, refresh = FALSE)
 ```
 
 ## Arguments
@@ -30,6 +30,10 @@ get_swing(from, to, division = NULL, state = NULL)
 - state:
 
   Optionally filter to a state abbreviation (e.g. "VIC").
+
+- refresh:
+
+  If `TRUE`, re-download from the AEC even if a cached copy exists.
 
 ## Value
 
@@ -65,7 +69,11 @@ A data frame with one row per division containing:
 
 - winner_from, winner_to:
 
-  Winning party in each election
+  Party that won the seat in each election
+
+- tpp_leader_from, tpp_leader_to:
+
+  Which of ALP/LNP led the TPP count
 
 - seat_changed:
 
@@ -75,6 +83,14 @@ A data frame with one row per division containing:
 
   TRUE if the division only appears in one election
 
+## Details
+
+The winner columns report the party that actually won the seat (from the
+AEC's members elected file), so crossbench seats are identified
+correctly. The TPP leader columns report which of ALP or the Coalition
+led the two-party preferred count, which is not the same thing in seats
+won by independents and minor parties.
+
 ## Examples
 
 ``` r
@@ -82,9 +98,11 @@ A data frame with one row per division containing:
 op <- options(readaec.cache_dir = tempdir())
 # National swing 2019 to 2022
 get_swing(2019, 2022)
-#> Downloading from AEC: HouseTppByDivisionDownload
-#> Downloading from AEC: HouseTppByDivisionDownload
-#> # A tibble: 153 × 15
+#> Downloading from AEC: HouseTppByDivisionDownload-24310.csv
+#> Downloading from AEC: HouseTppByDivisionDownload-27966.csv
+#> Downloading from AEC: HouseMembersElectedDownload-24310.csv
+#> Loading from cache: HouseMembersElectedDownload-27966.csv
+#> # A tibble: 153 × 17
 #>    division  division_id state alp_pct_from alp_pct_to alp_swing lnp_pct_from
 #>    <chr>           <dbl> <chr>        <dbl>      <dbl>     <dbl>        <dbl>
 #>  1 Pearce            244 WA            42.5       59.0      16.6         57.5
@@ -98,15 +116,18 @@ get_swing(2019, 2022)
 #>  9 Burt              317 WA            55.0       65.2      10.2         45.0
 #> 10 Brand             235 WA            56.7       66.7      10.0         43.3
 #> # ℹ 143 more rows
-#> # ℹ 8 more variables: lnp_pct_to <dbl>, lnp_swing <dbl>, winner_from <chr>,
-#> #   winner_to <chr>, seat_changed <lgl>, redistribution_flag <lgl>,
-#> #   year_from <dbl>, year_to <dbl>
+#> # ℹ 10 more variables: lnp_pct_to <dbl>, lnp_swing <dbl>, winner_from <chr>,
+#> #   winner_to <chr>, tpp_leader_from <chr>, tpp_leader_to <chr>,
+#> #   seat_changed <lgl>, redistribution_flag <lgl>, year_from <dbl>,
+#> #   year_to <dbl>
 
 # Teal seats in Victoria
 get_swing(2019, 2022, state = "VIC")
-#> Loading from cache: HouseTppByDivisionDownload
-#> Loading from cache: HouseTppByDivisionDownload
-#> # A tibble: 40 × 15
+#> Loading from cache: HouseTppByDivisionDownload-24310.csv
+#> Loading from cache: HouseTppByDivisionDownload-27966.csv
+#> Loading from cache: HouseMembersElectedDownload-24310.csv
+#> Loading from cache: HouseMembersElectedDownload-27966.csv
+#> # A tibble: 40 × 17
 #>    division  division_id state alp_pct_from alp_pct_to alp_swing lnp_pct_from
 #>    <chr>           <dbl> <chr>        <dbl>      <dbl>     <dbl>        <dbl>
 #>  1 Melbourne         228 VIC           67.1       77.9     10.8          32.9
@@ -120,27 +141,33 @@ get_swing(2019, 2022, state = "VIC")
 #>  9 Scullin           232 VIC           71.7       65.6     -6.08         28.3
 #> 10 Macnamara         322 VIC           56.2       62.2      6            43.8
 #> # ℹ 30 more rows
-#> # ℹ 8 more variables: lnp_pct_to <dbl>, lnp_swing <dbl>, winner_from <chr>,
-#> #   winner_to <chr>, seat_changed <lgl>, redistribution_flag <lgl>,
-#> #   year_from <dbl>, year_to <dbl>
+#> # ℹ 10 more variables: lnp_pct_to <dbl>, lnp_swing <dbl>, winner_from <chr>,
+#> #   winner_to <chr>, tpp_leader_from <chr>, tpp_leader_to <chr>,
+#> #   seat_changed <lgl>, redistribution_flag <lgl>, year_from <dbl>,
+#> #   year_to <dbl>
 
 # A single seat
 get_swing(2019, 2022, division = "Kooyong")
-#> Loading from cache: HouseTppByDivisionDownload
-#> Loading from cache: HouseTppByDivisionDownload
-#> # A tibble: 1 × 15
+#> Loading from cache: HouseTppByDivisionDownload-24310.csv
+#> Loading from cache: HouseTppByDivisionDownload-27966.csv
+#> Loading from cache: HouseMembersElectedDownload-24310.csv
+#> Loading from cache: HouseMembersElectedDownload-27966.csv
+#> # A tibble: 1 × 17
 #>   division division_id state alp_pct_from alp_pct_to alp_swing lnp_pct_from
 #>   <chr>          <dbl> <chr>        <dbl>      <dbl>     <dbl>        <dbl>
 #> 1 Kooyong          221 VIC           43.3       45.8       2.5         56.7
-#> # ℹ 8 more variables: lnp_pct_to <dbl>, lnp_swing <dbl>, winner_from <chr>,
-#> #   winner_to <chr>, seat_changed <lgl>, redistribution_flag <lgl>,
-#> #   year_from <dbl>, year_to <dbl>
+#> # ℹ 10 more variables: lnp_pct_to <dbl>, lnp_swing <dbl>, winner_from <chr>,
+#> #   winner_to <chr>, tpp_leader_from <chr>, tpp_leader_to <chr>,
+#> #   seat_changed <lgl>, redistribution_flag <lgl>, year_from <dbl>,
+#> #   year_to <dbl>
 
 # Long-run comparison
 get_swing(2013, 2025)
-#> Downloading from AEC: HouseTppByDivisionDownload
-#> Downloading from AEC: HouseTppByDivisionDownload
-#> # A tibble: 162 × 15
+#> Downloading from AEC: HouseTppByDivisionDownload-17496.csv
+#> Downloading from AEC: HouseTppByDivisionDownload-31496.csv
+#> Downloading from AEC: HouseMembersElectedDownload-17496.csv
+#> Downloading from AEC: HouseMembersElectedDownload-31496.csv
+#> # A tibble: 162 × 17
 #>    division  division_id state alp_pct_from alp_pct_to alp_swing lnp_pct_from
 #>    <chr>           <dbl> <chr>        <dbl>      <dbl>     <dbl>        <dbl>
 #>  1 Macarthur         131 NSW           38.6       65.6      27.0         61.4
@@ -154,9 +181,10 @@ get_swing(2013, 2025)
 #>  9 Mitchell          134 NSW           27.9       46.2      18.3         72.1
 #> 10 Hindmarsh         185 SA            48.1       66.4      18.2         51.9
 #> # ℹ 152 more rows
-#> # ℹ 8 more variables: lnp_pct_to <dbl>, lnp_swing <dbl>, winner_from <chr>,
-#> #   winner_to <chr>, seat_changed <lgl>, redistribution_flag <lgl>,
-#> #   year_from <dbl>, year_to <dbl>
+#> # ℹ 10 more variables: lnp_pct_to <dbl>, lnp_swing <dbl>, winner_from <chr>,
+#> #   winner_to <chr>, tpp_leader_from <chr>, tpp_leader_to <chr>,
+#> #   seat_changed <lgl>, redistribution_flag <lgl>, year_from <dbl>,
+#> #   year_to <dbl>
 options(op)
 # }
 ```

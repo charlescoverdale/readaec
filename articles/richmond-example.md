@@ -10,6 +10,7 @@ This vignette walks through a complete single-electorate analysis using
 readaec.
 
 ``` r
+
 library(readaec)
 library(dplyr)
 library(ggplot2)
@@ -23,6 +24,7 @@ library(purrr)
 Start by confirming which elections we have data for.
 
 ``` r
+
 list_elections()
 #>   year event_id       date               type has_downloads
 #> 1 2001    10822 2001-11-10            general         FALSE
@@ -46,6 +48,7 @@ function returns one row per division; we filter to Richmond and stack
 the years.
 
 ``` r
+
 # AEC CSV downloads are available from 2007 onwards
 years <- list_elections()$year[list_elections()$has_downloads]
 
@@ -69,6 +72,7 @@ tpp_richmond
 ```
 
 ``` r
+
 ggplot(tpp_richmond, aes(x = year)) +
   geom_line(aes(y = alp_pct, colour = "ALP"), linewidth = 1.2) +
   geom_point(aes(y = alp_pct, colour = "ALP"), size = 3) +
@@ -105,6 +109,7 @@ returns the elected member for every division. We filter to Richmond to
 build a candidate-by-year summary.
 
 ``` r
+
 members_richmond <- map_dfr(years, function(yr) {
   tryCatch(
     get_members_elected(yr) |>
@@ -138,6 +143,7 @@ before preferences were distributed. This reveals the full competitive
 landscape beyond just the two-party contest.
 
 ``` r
+
 fp_richmond <- map_dfr(years, function(yr) {
   get_fp(yr) |>
     filter(tolower(division) == "richmond") |>
@@ -146,6 +152,7 @@ fp_richmond <- map_dfr(years, function(yr) {
 ```
 
 ``` r
+
 # Total formal votes per year (for calculating shares)
 fp_totals <- fp_richmond |>
   group_by(year) |>
@@ -168,6 +175,7 @@ fp_major <- fp_richmond |>
 ```
 
 ``` r
+
 ggplot(fp_major, aes(x = year, y = pct, colour = party_label)) +
   geom_line(linewidth = 1.1) +
   geom_point(size = 2.5) +
@@ -201,6 +209,7 @@ Compare Richmond’s election-to-election swing against all other NSW
 divisions to see whether it moved with or against the state trend.
 
 ``` r
+
 # Build consecutive election pairs from years with downloads
 election_pairs <- Map(c, head(years, -1), tail(years, -1))
 
@@ -212,6 +221,7 @@ nsw_swings <- map_dfr(election_pairs, function(pair) {
 ```
 
 ``` r
+
 richmond_swing <- nsw_swings |>
   filter(tolower(division) == "richmond") |>
   select(period, division, alp_swing, year_from, year_to)
@@ -239,6 +249,7 @@ swing_comparison |>
 ```
 
 ``` r
+
 swing_comparison |>
   select(period, richmond_swing = alp_swing, nsw_avg = avg_alp_swing) |>
   tidyr::pivot_longer(c(richmond_swing, nsw_avg),
@@ -271,6 +282,7 @@ swing_comparison |>
 Is the electorate growing? Is turnout holding up?
 
 ``` r
+
 turnout_richmond <- map_dfr(years, function(yr) {
   get_turnout(yr) |>
     filter(tolower(divisionnm) == "richmond") |>
@@ -292,6 +304,7 @@ turnout_richmond
 ```
 
 ``` r
+
 enrolment_richmond <- map_dfr(years, function(yr) {
   get_enrolment(yr) |>
     filter(tolower(divisionnm) == "richmond") |>

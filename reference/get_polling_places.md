@@ -6,7 +6,7 @@ election.
 ## Usage
 
 ``` r
-get_polling_places(year, division = NULL)
+get_polling_places(year, division = NULL, refresh = FALSE)
 ```
 
 ## Arguments
@@ -21,6 +21,10 @@ get_polling_places(year, division = NULL)
 
   Filter to a specific division name. NULL returns all.
 
+- refresh:
+
+  If `TRUE`, re-download from the AEC even if a cached copy exists.
+
 ## Value
 
 A tidy data frame of polling places with lat/lon coordinates.
@@ -31,11 +35,7 @@ A tidy data frame of polling places with lat/lon coordinates.
 # \donttest{
 op <- options(readaec.cache_dir = tempdir())
 get_polling_places(2022)
-#> Downloading from AEC: GeneralPollingPlacesDownload
-#> Warning: One or more parsing issues, call `problems()` on your data frame for details,
-#> e.g.:
-#>   dat <- vroom(...)
-#>   problems(dat)
+#> Downloading from AEC: GeneralPollingPlacesDownload-27966.csv
 #> # A tibble: 8,479 × 16
 #>    state divisionid divisionnm pollingplaceid pollingplacetypeid pollingplacenm 
 #>    <chr>      <dbl> <chr>               <dbl>              <dbl> <chr>          
@@ -51,15 +51,11 @@ get_polling_places(2022)
 #> 10 ACT          318 Bean                82523                  1 Coombs         
 #> # ℹ 8,469 more rows
 #> # ℹ 10 more variables: premisesnm <chr>, premisesaddress1 <chr>,
-#> #   premisesaddress2 <chr>, premisesaddress3 <lgl>, premisessuburb <chr>,
+#> #   premisesaddress2 <chr>, premisesaddress3 <chr>, premisessuburb <chr>,
 #> #   premisesstateab <chr>, premisespostcode <chr>, latitude <dbl>,
 #> #   longitude <dbl>, year <dbl>
 get_polling_places(2022, division = "Kooyong")
-#> Loading from cache: GeneralPollingPlacesDownload
-#> Warning: One or more parsing issues, call `problems()` on your data frame for details,
-#> e.g.:
-#>   dat <- vroom(...)
-#>   problems(dat)
+#> Loading from cache: GeneralPollingPlacesDownload-27966.csv
 #> # A tibble: 45 × 16
 #>    state divisionid divisionnm pollingplaceid pollingplacetypeid pollingplacenm 
 #>    <chr>      <dbl> <chr>               <dbl>              <dbl> <chr>          
@@ -75,7 +71,7 @@ get_polling_places(2022, division = "Kooyong")
 #> 10 VIC          221 Kooyong             64001                  1 Camberwell Sou…
 #> # ℹ 35 more rows
 #> # ℹ 10 more variables: premisesnm <chr>, premisesaddress1 <chr>,
-#> #   premisesaddress2 <chr>, premisesaddress3 <lgl>, premisessuburb <chr>,
+#> #   premisesaddress2 <chr>, premisesaddress3 <chr>, premisessuburb <chr>,
 #> #   premisesstateab <chr>, premisespostcode <chr>, latitude <dbl>,
 #> #   longitude <dbl>, year <dbl>
 options(op)

@@ -5,7 +5,7 @@ Get two-party preferred votes by polling place
 ## Usage
 
 ``` r
-get_tpp_by_booth(year)
+get_tpp_by_booth(year, refresh = FALSE)
 ```
 
 ## Arguments
@@ -15,6 +15,11 @@ get_tpp_by_booth(year)
   Election year. Use
   [`list_elections()`](https://charlescoverdale.github.io/readaec/reference/list_elections.md)
   to see available years.
+
+- refresh:
+
+  If `TRUE`, re-download from the AEC even if a cached copy exists.
+  Useful on election night when counts are still updating.
 
 ## Value
 
@@ -26,7 +31,7 @@ A tidy data frame of TPP votes by polling place.
 # \donttest{
 op <- options(readaec.cache_dir = tempdir())
 get_tpp_by_booth(2022)
-#> Downloading from AEC: HouseTppByPollingPlaceDownload
+#> Downloading from AEC: HouseTppByPollingPlaceDownload-27966.csv
 #> # A tibble: 8,479 × 12
 #>    stateab divisionid divisionnm pollingplaceid pollingplace       
 #>    <chr>        <dbl> <chr>               <dbl> <chr>              

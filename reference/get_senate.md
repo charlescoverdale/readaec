@@ -5,7 +5,7 @@ Get Senate first preference votes by state
 ## Usage
 
 ``` r
-get_senate(year)
+get_senate(year, refresh = FALSE)
 ```
 
 ## Arguments
@@ -15,6 +15,11 @@ get_senate(year)
   Election year. Use
   [`list_elections()`](https://charlescoverdale.github.io/readaec/reference/list_elections.md)
   to see available years.
+
+- refresh:
+
+  If `TRUE`, re-download from the AEC even if a cached copy exists.
+  Useful on election night when counts are still updating.
 
 ## Value
 
@@ -26,7 +31,7 @@ A tidy data frame of Senate first preference votes by state.
 # \donttest{
 op <- options(readaec.cache_dir = tempdir())
 get_senate(2022)
-#> Downloading from AEC: SenateFirstPrefsByStateByVoteTypeDownload
+#> Downloading from AEC: SenateFirstPrefsByStateByVoteTypeDownload-27966.csv
 #> # A tibble: 572 × 13
 #>    stateab group candidateid ballotposition candidatedetails       partyname    
 #>    <chr>   <chr>       <dbl>          <dbl> <chr>                  <chr>        

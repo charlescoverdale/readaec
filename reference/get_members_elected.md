@@ -5,7 +5,7 @@ Get members elected to the House of Representatives
 ## Usage
 
 ``` r
-get_members_elected(year)
+get_members_elected(year, refresh = FALSE)
 ```
 
 ## Arguments
@@ -15,6 +15,11 @@ get_members_elected(year)
   Election year. Use
   [`list_elections()`](https://charlescoverdale.github.io/readaec/reference/list_elections.md)
   to see available years.
+
+- refresh:
+
+  If `TRUE`, re-download from the AEC even if a cached copy exists.
+  Useful on election night when counts are still updating.
 
 ## Value
 
@@ -26,7 +31,7 @@ A tidy data frame of elected members.
 # \donttest{
 op <- options(readaec.cache_dir = tempdir())
 get_members_elected(2022)
-#> Downloading from AEC: HouseMembersElectedDownload
+#> Downloading from AEC: HouseMembersElectedDownload-27966.csv
 #> # A tibble: 151 × 9
 #>    divisionid divisionnm stateab candidateid givennm     surname partynm partyab
 #>         <dbl> <chr>      <chr>         <dbl> <chr>       <chr>   <chr>   <chr>  

@@ -5,7 +5,7 @@ Get first preference votes by division
 ## Usage
 
 ``` r
-get_fp(year)
+get_fp(year, refresh = FALSE)
 ```
 
 ## Arguments
@@ -15,6 +15,11 @@ get_fp(year)
   Election year. Use
   [`list_elections()`](https://charlescoverdale.github.io/readaec/reference/list_elections.md)
   to see available years.
+
+- refresh:
+
+  If `TRUE`, re-download from the AEC even if a cached copy exists.
+  Useful on election night when counts are still updating.
 
 ## Value
 
@@ -26,7 +31,7 @@ A tidy data frame of first preference votes by division.
 # \donttest{
 op <- options(readaec.cache_dir = tempdir())
 get_fp(2022)
-#> Downloading from AEC: HouseFirstPrefsByCandidateByVoteTypeDownload
+#> Downloading from AEC: HouseFirstPrefsByCandidateByVoteTypeDownload-27966.csv
 #> # A tibble: 1,354 × 19
 #>    state division_id division candidateid surname  given_name   ballotposition
 #>    <chr>       <dbl> <chr>          <dbl> <chr>    <chr>                 <dbl>

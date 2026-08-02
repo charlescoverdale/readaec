@@ -5,7 +5,7 @@ Get all candidates for an election
 ## Usage
 
 ``` r
-get_candidates(year, chamber = "house")
+get_candidates(year, chamber = "house", refresh = FALSE)
 ```
 
 ## Arguments
@@ -20,6 +20,10 @@ get_candidates(year, chamber = "house")
 
   "house" or "senate".
 
+- refresh:
+
+  If `TRUE`, re-download from the AEC even if a cached copy exists.
+
 ## Value
 
 A tidy data frame of candidates.
@@ -30,7 +34,7 @@ A tidy data frame of candidates.
 # \donttest{
 op <- options(readaec.cache_dir = tempdir())
 get_candidates(2022)
-#> Downloading from AEC: HouseCandidatesDownload
+#> Downloading from AEC: HouseCandidatesDownload-27966.csv
 #> # A tibble: 1,203 × 11
 #>    stateab divisionid divisionnm  partyab partynm    candidateid surname givennm
 #>    <chr>        <dbl> <chr>       <chr>   <chr>            <dbl> <chr>   <chr>  
@@ -47,7 +51,7 @@ get_candidates(2022)
 #> # ℹ 1,193 more rows
 #> # ℹ 3 more variables: elected <chr>, historicelected <chr>, year <dbl>
 get_candidates(2022, chamber = "senate")
-#> Downloading from AEC: SenateCandidatesDownload
+#> Downloading from AEC: SenateCandidatesDownload-27966.csv
 #> # A tibble: 421 × 9
 #>    stateab partyab partynm   candidateid surname givennm elected historicelected
 #>    <chr>   <chr>   <chr>           <dbl> <chr>   <chr>   <chr>   <chr>          

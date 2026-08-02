@@ -5,7 +5,7 @@ Get two-party preferred votes by division
 ## Usage
 
 ``` r
-get_tpp(year)
+get_tpp(year, refresh = FALSE)
 ```
 
 ## Arguments
@@ -15,6 +15,11 @@ get_tpp(year)
   Election year. Use
   [`list_elections()`](https://charlescoverdale.github.io/readaec/reference/list_elections.md)
   to see available years.
+
+- refresh:
+
+  If `TRUE`, re-download from the AEC even if a cached copy exists.
+  Useful on election night when counts are still updating.
 
 ## Value
 
@@ -26,7 +31,7 @@ A tidy data frame of TPP votes by division.
 # \donttest{
 op <- options(readaec.cache_dir = tempdir())
 get_tpp(2022)
-#> Loading from cache: HouseTppByDivisionDownload
+#> Loading from cache: HouseTppByDivisionDownload-27966.csv
 #> # A tibble: 151 × 11
 #>    division  division_id state party lnp_votes lnp_pct alp_votes alp_pct
 #>    <chr>           <dbl> <chr> <chr>     <dbl>   <dbl>     <dbl>   <dbl>

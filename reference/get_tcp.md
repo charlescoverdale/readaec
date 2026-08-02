@@ -5,7 +5,7 @@ Get two-candidate preferred votes by division
 ## Usage
 
 ``` r
-get_tcp(year)
+get_tcp(year, refresh = FALSE)
 ```
 
 ## Arguments
@@ -15,6 +15,11 @@ get_tcp(year)
   Election year. Use
   [`list_elections()`](https://charlescoverdale.github.io/readaec/reference/list_elections.md)
   to see available years.
+
+- refresh:
+
+  If `TRUE`, re-download from the AEC even if a cached copy exists.
+  Useful on election night when counts are still updating.
 
 ## Value
 
@@ -26,7 +31,7 @@ A tidy data frame of TCP votes by division.
 # \donttest{
 op <- options(readaec.cache_dir = tempdir())
 get_tcp(2022)
-#> Downloading from AEC: HouseTcpByCandidateByVoteTypeDownload
+#> Downloading from AEC: HouseTcpByCandidateByVoteTypeDownload-27966.csv
 #> # A tibble: 302 × 19
 #>    state division_id division candidateid surname given_name ballotposition
 #>    <chr>       <dbl> <chr>          <dbl> <chr>   <chr>               <dbl>

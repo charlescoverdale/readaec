@@ -20,8 +20,8 @@ files.
 # \donttest{
 op <- options(readaec.cache_dir = tempdir())
 clear_cache()
-#> Warning: cannot remove file '/tmp/Rtmp5wphst/bslib-246362e7e3ff6191071d5f9b40ba8d62', reason 'Directory not empty'
-#> Warning: cannot remove file '/tmp/Rtmp5wphst/downlit', reason 'Directory not empty'
+#> Warning: cannot remove file '/tmp/RtmpPljCaS/bslib-36dd7d54583ca31becd9906e27a99038', reason 'Directory not empty'
+#> Warning: cannot remove file '/tmp/RtmpPljCaS/downlit', reason 'Directory not empty'
 #> Cleared 3 cached files.
 options(op)
 # }

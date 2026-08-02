@@ -5,7 +5,7 @@ Get first preference votes by polling place
 ## Usage
 
 ``` r
-get_fp_by_booth(year, state = NULL)
+get_fp_by_booth(year, state = NULL, refresh = FALSE)
 ```
 
 ## Arguments
@@ -20,6 +20,11 @@ get_fp_by_booth(year, state = NULL)
 
   Filter to a specific state (e.g. "VIC"). NULL returns all states.
 
+- refresh:
+
+  If `TRUE`, re-download from the AEC even if a cached copy exists.
+  Useful on election night when counts are still updating.
+
 ## Value
 
 A tidy data frame of first preference votes by polling place.
@@ -30,7 +35,7 @@ A tidy data frame of first preference votes by polling place.
 # \donttest{
 op <- options(readaec.cache_dir = tempdir())
 get_fp_by_booth(2022, state = "VIC")
-#> Downloading from AEC: HouseStateFirstPrefsByPollingPlaceDownload-27966-VIC
+#> Downloading from AEC: HouseStateFirstPrefsByPollingPlaceDownload-27966-VIC.csv
 #> # A tibble: 18,322 × 16
 #>    stateab divisionid divisionnm pollingplaceid pollingplace candidateid surname
 #>    <chr>        <dbl> <chr>               <dbl> <chr>              <dbl> <chr>  
