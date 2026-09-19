@@ -1,0 +1,796 @@
+# readaec: full API reference
+
+> Provides clean, tidy access to Australian Electoral Commission (AEC) federal election data.
+
+- Version: 0.2.0
+- Install: `install.packages("readaec")`
+- CRAN: https://CRAN.R-project.org/package=readaec
+- GitHub: https://github.com/charlescoverdale/readaec
+- Reference site: https://charlescoverdale.github.io/readaec/
+
+This file is a self-contained reference for LLM agents: every exported
+function with its signature, arguments, return value, and example.
+
+---
+
+## `clear_cache()`
+
+**Clear the local AEC data cache**
+
+Deletes all files downloaded and cached by readaec. The next function call will re-download fresh data from the AEC.
+
+**Usage**
+
+```r
+clear_cache()
+```
+
+**Returns**
+
+Invisibly returns `NULL`. Called for its side effect of deleting cached files.
+
+**Example**
+
+```r
+op <- options(readaec.cache_dir = tempdir())
+clear_cache()
+options(op)
+```
+
+---
+
+## `get_by_election_candidates()`
+
+**Get by-election candidates**
+
+Get by-election candidates
+
+**Usage**
+
+```r
+get_by_election_candidates(division, year = NULL, refresh = FALSE)
+```
+
+**Arguments**
+
+- `division`: Division name (e.g. "Farrer").
+- `year`: By-election year. Only needed where a division has had more than one by-election (e.g. Mayo in 2008 and 2018).
+- `refresh`: If `TRUE`, re-download from the AEC even if a cached copy exists.
+
+**Returns**
+
+A tidy data frame of candidates.
+
+**Example**
+
+```r
+op <- options(readaec.cache_dir = tempdir())
+get_by_election_candidates("Farrer")
+options(op)
+```
+
+---
+
+## `get_by_election_fp()`
+
+**Get by-election first preference votes by polling place**
+
+By-election results are published at polling place level. Use `list_by_elections()` to see which by-elections are available.
+
+**Usage**
+
+```r
+get_by_election_fp(division, year = NULL, refresh = FALSE)
+```
+
+**Arguments**
+
+- `division`: Division name (e.g. "Farrer").
+- `year`: By-election year. Only needed where a division has had more than one by-election (e.g. Mayo in 2008 and 2018).
+- `refresh`: If `TRUE`, re-download from the AEC even if a cached copy exists.
+
+**Returns**
+
+A tidy data frame of first preference votes by polling place.
+
+**Example**
+
+```r
+op <- options(readaec.cache_dir = tempdir())
+get_by_election_fp("Farrer")
+options(op)
+```
+
+---
+
+## `get_by_election_tcp()`
+
+**Get by-election two-candidate preferred votes by polling place**
+
+Get by-election two-candidate preferred votes by polling place
+
+**Usage**
+
+```r
+get_by_election_tcp(division, year = NULL, refresh = FALSE)
+```
+
+**Arguments**
+
+- `division`: Division name (e.g. "Farrer").
+- `year`: By-election year. Only needed where a division has had more than one by-election (e.g. Mayo in 2008 and 2018).
+- `refresh`: If `TRUE`, re-download from the AEC even if a cached copy exists.
+
+**Returns**
+
+A tidy data frame of TCP votes by candidate by polling place.
+
+**Example**
+
+```r
+op <- options(readaec.cache_dir = tempdir())
+get_by_election_tcp("Farrer")
+options(op)
+```
+
+---
+
+## `get_by_election_tpp()`
+
+**Get by-election two-party preferred votes by polling place**
+
+Note that TPP figures are only meaningful where the final two candidates were ALP and Coalition. In by-elections decided between other candidates (such as Farrer in 2026), use `get_by_election_tcp()` instead.
+
+**Usage**
+
+```r
+get_by_election_tpp(division, year = NULL, refresh = FALSE)
+```
+
+**Arguments**
+
+- `division`: Division name (e.g. "Farrer").
+- `year`: By-election year. Only needed where a division has had more than one by-election (e.g. Mayo in 2008 and 2018).
+- `refresh`: If `TRUE`, re-download from the AEC even if a cached copy exists.
+
+**Returns**
+
+A tidy data frame of TPP votes by polling place.
+
+**Example**
+
+```r
+op <- options(readaec.cache_dir = tempdir())
+get_by_election_tpp("Dunkley")
+options(op)
+```
+
+---
+
+## `get_candidates()`
+
+**Get all candidates for an election**
+
+Get all candidates for an election
+
+**Usage**
+
+```r
+get_candidates(year, chamber = "house", refresh = FALSE)
+```
+
+**Arguments**
+
+- `year`: Election year. Use `list_elections()` to see available years.
+- `chamber`: "house" or "senate".
+- `refresh`: If `TRUE`, re-download from the AEC even if a cached copy exists.
+
+**Returns**
+
+A tidy data frame of candidates.
+
+**Example**
+
+```r
+op <- options(readaec.cache_dir = tempdir())
+get_candidates(2022)
+get_candidates(2022, chamber = "senate")
+options(op)
+```
+
+---
+
+## `get_dop()`
+
+**Get the full distribution of preferences by division**
+
+Returns the count-by-count distribution of preferences for every division: each exclusion round, the candidate excluded, and where their preferences flowed. This is the dataset for analysing seats won from second or third place on preference flows, which division-level TPP and TCP figures cannot show.
+
+**Usage**
+
+```r
+get_dop(year, refresh = FALSE)
+```
+
+**Arguments**
+
+- `year`: Election year. Use `list_elections()` to see available years.
+- `refresh`: If `TRUE`, re-download from the AEC even if a cached copy exists. Useful on election night when counts are still updating.
+
+**Returns**
+
+A tidy data frame with one row per candidate per count per division, including `countnumber`, `calculationtype` (preference count, transfer count, and percentages), and `calculationvalue`.
+
+**Example**
+
+```r
+op <- options(readaec.cache_dir = tempdir())
+dop <- get_dop(2025)
+
+# Final count in a single seat
+mel <- subset(dop, division == "Melbourne")
+subset(mel, countnumber == max(countnumber))
+options(op)
+```
+
+---
+
+## `get_enrolment()`
+
+**Get enrolment by division**
+
+Get enrolment by division
+
+**Usage**
+
+```r
+get_enrolment(year, refresh = FALSE)
+```
+
+**Arguments**
+
+- `year`: Election year. Use `list_elections()` to see available years.
+- `refresh`: If `TRUE`, re-download from the AEC even if a cached copy exists. Useful on election night when counts are still updating.
+
+**Returns**
+
+A tidy data frame of enrolment figures by division.
+
+**Example**
+
+```r
+op <- options(readaec.cache_dir = tempdir())
+get_enrolment(2022)
+options(op)
+```
+
+---
+
+## `get_fp()`
+
+**Get first preference votes by division**
+
+Get first preference votes by division
+
+**Usage**
+
+```r
+get_fp(year, refresh = FALSE)
+```
+
+**Arguments**
+
+- `year`: Election year. Use `list_elections()` to see available years.
+- `refresh`: If `TRUE`, re-download from the AEC even if a cached copy exists. Useful on election night when counts are still updating.
+
+**Returns**
+
+A tidy data frame of first preference votes by division.
+
+**Example**
+
+```r
+op <- options(readaec.cache_dir = tempdir())
+get_fp(2022)
+options(op)
+```
+
+---
+
+## `get_fp_by_booth()`
+
+**Get first preference votes by polling place**
+
+Get first preference votes by polling place
+
+**Usage**
+
+```r
+get_fp_by_booth(year, state = NULL, refresh = FALSE)
+```
+
+**Arguments**
+
+- `year`: Election year. Use `list_elections()` to see available years.
+- `state`: Filter to a specific state (e.g. "VIC"). NULL returns all states.
+- `refresh`: If `TRUE`, re-download from the AEC even if a cached copy exists. Useful on election night when counts are still updating.
+
+**Returns**
+
+A tidy data frame of first preference votes by polling place.
+
+**Example**
+
+```r
+op <- options(readaec.cache_dir = tempdir())
+get_fp_by_booth(2022, state = "VIC")
+options(op)
+```
+
+---
+
+## `get_members_elected()`
+
+**Get members elected to the House of Representatives**
+
+Get members elected to the House of Representatives
+
+**Usage**
+
+```r
+get_members_elected(year, refresh = FALSE)
+```
+
+**Arguments**
+
+- `year`: Election year. Use `list_elections()` to see available years.
+- `refresh`: If `TRUE`, re-download from the AEC even if a cached copy exists. Useful on election night when counts are still updating.
+
+**Returns**
+
+A tidy data frame of elected members.
+
+**Example**
+
+```r
+op <- options(readaec.cache_dir = tempdir())
+get_members_elected(2022)
+options(op)
+```
+
+---
+
+## `get_polling_places()`
+
+**Get polling place locations**
+
+Returns all polling place addresses and coordinates for a given election.
+
+**Usage**
+
+```r
+get_polling_places(year, division = NULL, refresh = FALSE)
+```
+
+**Arguments**
+
+- `year`: Election year. Use `list_elections()` to see available years.
+- `division`: Filter to a specific division name. NULL returns all.
+- `refresh`: If `TRUE`, re-download from the AEC even if a cached copy exists.
+
+**Returns**
+
+A tidy data frame of polling places with lat/lon coordinates.
+
+**Example**
+
+```r
+op <- options(readaec.cache_dir = tempdir())
+get_polling_places(2022)
+get_polling_places(2022, division = "Kooyong")
+options(op)
+```
+
+---
+
+## `get_referendum_by_booth()`
+
+**Get referendum results by polling place**
+
+Returns Yes and No votes for every polling place, including formal and informal counts.
+
+**Usage**
+
+```r
+get_referendum_by_booth(year = 2023, state = NULL, refresh = FALSE)
+```
+
+**Arguments**
+
+- `year`: Referendum year. Use `list_referendums()` to see available years. Defaults to 2023 (the Voice referendum).
+- `state`: Filter to a specific state (e.g. "VIC"). NULL returns all states.
+- `refresh`: If `TRUE`, re-download from the AEC even if a cached copy exists.
+
+**Returns**
+
+A tidy data frame of Yes/No votes by polling place.
+
+**Example**
+
+```r
+op <- options(readaec.cache_dir = tempdir())
+get_referendum_by_booth(2023, state = "TAS")
+options(op)
+```
+
+---
+
+## `get_referendum_turnout()`
+
+**Get referendum turnout**
+
+Get referendum turnout
+
+**Usage**
+
+```r
+get_referendum_turnout(year = 2023, by = "division", refresh = FALSE)
+```
+
+**Arguments**
+
+- `year`: Referendum year. Use `list_referendums()` to see available years. Defaults to 2023 (the Voice referendum).
+- `by`: Aggregation level: "division" (default) or "state".
+- `refresh`: If `TRUE`, re-download from the AEC even if a cached copy exists.
+
+**Returns**
+
+A tidy data frame of enrolment and turnout.
+
+**Example**
+
+```r
+op <- options(readaec.cache_dir = tempdir())
+get_referendum_turnout(2023)
+get_referendum_turnout(2023, by = "state")
+options(op)
+```
+
+---
+
+## `get_senate()`
+
+**Get Senate first preference votes by state**
+
+Get Senate first preference votes by state
+
+**Usage**
+
+```r
+get_senate(year, refresh = FALSE)
+```
+
+**Arguments**
+
+- `year`: Election year. Use `list_elections()` to see available years.
+- `refresh`: If `TRUE`, re-download from the AEC even if a cached copy exists. Useful on election night when counts are still updating.
+
+**Returns**
+
+A tidy data frame of Senate first preference votes by state.
+
+**Example**
+
+```r
+op <- options(readaec.cache_dir = tempdir())
+get_senate(2022)
+options(op)
+```
+
+---
+
+## `get_senators_elected()`
+
+**Get senators elected**
+
+Returns the senators elected at each election, in the order they were elected within each state or territory.
+
+**Usage**
+
+```r
+get_senators_elected(year, refresh = FALSE)
+```
+
+**Arguments**
+
+- `year`: Election year. Use `list_elections()` to see available years.
+- `refresh`: If `TRUE`, re-download from the AEC even if a cached copy exists. Useful on election night when counts are still updating.
+
+**Returns**
+
+A tidy data frame with one row per senator elected, including `state`, `given_name`, `surname`, `party`, `party_name`, and `elected_order`.
+
+**Example**
+
+```r
+op <- options(readaec.cache_dir = tempdir())
+get_senators_elected(2025)
+options(op)
+```
+
+---
+
+## `get_swing()`
+
+**Compare TPP results between two elections**
+
+Calculates the change in two-party preferred vote share between any two federal elections. Joins on division ID (not name) to handle renamed divisions correctly. Divisions that don't appear in both elections are flagged rather than silently dropped.
+
+**Usage**
+
+```r
+get_swing(from, to, division = NULL, state = NULL, refresh = FALSE)
+```
+
+**Arguments**
+
+- `from`: Election year to compare from. Use `list_elections()` to see available years.
+- `to`: Election year to compare to.
+- `division`: Optionally filter to one or more division names.
+- `state`: Optionally filter to a state abbreviation (e.g. "VIC").
+- `refresh`: If `TRUE`, re-download from the AEC even if a cached copy exists.
+
+**Returns**
+
+A data frame with one row per division containing: divisionDivision name (from the later election) division_idAEC division ID stateState abbreviation alp_pct_from, alp_pct_toALP TPP percentage in each election lnp_pct_from, lnp_pct_toLNP TPP percentage in each election alp_swingChange in ALP TPP (positive = swing to ALP) lnp_swingChange in LNP TPP (positive = swing to LNP) winner_from, winner_toParty that won the seat in each election tpp_leader_from, tpp_leader_toWhich of ALP/LNP led the TPP count seat_changedTRUE if the seat changed hands redistribution_flagTRUE if the division only appears in one election
+
+**Example**
+
+```r
+op <- options(readaec.cache_dir = tempdir())
+# National swing 2019 to 2022
+get_swing(2019, 2022)
+
+# Teal seats in Victoria
+get_swing(2019, 2022, state = "VIC")
+
+# A single seat
+get_swing(2019, 2022, division = "Kooyong")
+
+# Long-run comparison
+get_swing(2013, 2025)
+options(op)
+```
+
+---
+
+## `get_tcp()`
+
+**Get two-candidate preferred votes by division**
+
+Get two-candidate preferred votes by division
+
+**Usage**
+
+```r
+get_tcp(year, refresh = FALSE)
+```
+
+**Arguments**
+
+- `year`: Election year. Use `list_elections()` to see available years.
+- `refresh`: If `TRUE`, re-download from the AEC even if a cached copy exists. Useful on election night when counts are still updating.
+
+**Returns**
+
+A tidy data frame of TCP votes by division.
+
+**Example**
+
+```r
+op <- options(readaec.cache_dir = tempdir())
+get_tcp(2022)
+options(op)
+```
+
+---
+
+## `get_tcp_by_booth()`
+
+**Get two-candidate preferred votes by polling place**
+
+Get two-candidate preferred votes by polling place
+
+**Usage**
+
+```r
+get_tcp_by_booth(year, refresh = FALSE)
+```
+
+**Arguments**
+
+- `year`: Election year. Use `list_elections()` to see available years.
+- `refresh`: If `TRUE`, re-download from the AEC even if a cached copy exists. Useful on election night when counts are still updating.
+
+**Returns**
+
+A tidy data frame of TCP votes by candidate by polling place.
+
+**Example**
+
+```r
+op <- options(readaec.cache_dir = tempdir())
+get_tcp_by_booth(2022)
+options(op)
+```
+
+---
+
+## `get_tpp()`
+
+**Get two-party preferred votes by division**
+
+Get two-party preferred votes by division
+
+**Usage**
+
+```r
+get_tpp(year, refresh = FALSE)
+```
+
+**Arguments**
+
+- `year`: Election year. Use `list_elections()` to see available years.
+- `refresh`: If `TRUE`, re-download from the AEC even if a cached copy exists. Useful on election night when counts are still updating.
+
+**Returns**
+
+A tidy data frame of TPP votes by division.
+
+**Example**
+
+```r
+op <- options(readaec.cache_dir = tempdir())
+get_tpp(2022)
+options(op)
+```
+
+---
+
+## `get_tpp_by_booth()`
+
+**Get two-party preferred votes by polling place**
+
+Get two-party preferred votes by polling place
+
+**Usage**
+
+```r
+get_tpp_by_booth(year, refresh = FALSE)
+```
+
+**Arguments**
+
+- `year`: Election year. Use `list_elections()` to see available years.
+- `refresh`: If `TRUE`, re-download from the AEC even if a cached copy exists. Useful on election night when counts are still updating.
+
+**Returns**
+
+A tidy data frame of TPP votes by polling place.
+
+**Example**
+
+```r
+op <- options(readaec.cache_dir = tempdir())
+get_tpp_by_booth(2022)
+options(op)
+```
+
+---
+
+## `get_turnout()`
+
+**Get turnout by division**
+
+Get turnout by division
+
+**Usage**
+
+```r
+get_turnout(year, refresh = FALSE)
+```
+
+**Arguments**
+
+- `year`: Election year. Use `list_elections()` to see available years.
+- `refresh`: If `TRUE`, re-download from the AEC even if a cached copy exists. Useful on election night when counts are still updating.
+
+**Returns**
+
+A tidy data frame of turnout figures by division.
+
+**Example**
+
+```r
+op <- options(readaec.cache_dir = tempdir())
+get_turnout(2022)
+options(op)
+```
+
+---
+
+## `list_by_elections()`
+
+**List all federal by-elections**
+
+Lists House of Representatives by-elections with results published on the AEC tally room, from 2005 onwards. The 2014 WA Senate special election is not included as it was not a House by-election.
+
+**Usage**
+
+```r
+list_by_elections()
+```
+
+**Returns**
+
+A data frame with one row per by-election, including columns `division`, `state`, `date`, `year`, `event_id`, and `has_downloads`. The `has_downloads` column is `TRUE` where AEC CSV downloads are available (2008 onwards).
+
+**Example**
+
+```r
+list_by_elections()
+```
+
+---
+
+## `list_elections()`
+
+**List all available federal elections**
+
+List all available federal elections
+
+**Usage**
+
+```r
+list_elections()
+```
+
+**Returns**
+
+A data frame with one row per election, including columns `year`, `date`, `event_id`, `type`, and `has_downloads`. The `has_downloads` column is `TRUE` for years where AEC CSV downloads are available (2007 onwards). The 2001 and 2004 elections are listed for reference but their data cannot be fetched.
+
+**Example**
+
+```r
+list_elections()
+
+# Only years with downloadable data
+list_elections()[list_elections()$has_downloads, ]
+```
+
+---
+
+## `list_referendums()`
+
+**List available referendums**
+
+List available referendums
+
+**Usage**
+
+```r
+list_referendums()
+```
+
+**Returns**
+
+A data frame with one row per referendum with results published on the AEC tally room, including columns `year`, `date`, `event_id`, and `description`.
+
+**Example**
+
+```r
+list_referendums()
+```
+
+---
+

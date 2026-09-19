@@ -6,3 +6,4 @@
 ^CRAN-SUBMISSION$
 ^_pkgdown\.yml$
 ^\.\.\.?Rcheck$
+^llms-full\.txt$
