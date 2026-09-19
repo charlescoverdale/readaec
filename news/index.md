@@ -2,6 +2,8 @@
 
 ## readaec 0.2.0
 
+CRAN release: 2026-08-02
+
 ### New data
 
 - By-election support:
