@@ -115,6 +115,10 @@ get_by_election_tcp("Farrer")
 # Divisions with two by-elections need a year
 get_by_election_tcp("Mayo", year = 2018)
 
+# Two-party preferred by booth (meaningful only where the final two were
+# Labor and the Coalition, as in Dunkley 2024)
+get_by_election_tpp("Dunkley")
+
 # Candidates
 get_by_election_candidates("Aston")
 ```
