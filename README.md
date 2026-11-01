@@ -36,12 +36,19 @@ devtools::install_github("charlescoverdale/readaec")
 library(readaec)
 
 list_elections()
-#>   year event_id       date               type has_downloads
-#> 1 2007    13745 2007-11-24            general          TRUE
-#> 2 2010    15508 2010-08-21            general          TRUE
-#> ...
-#> 7 2025    31496 2025-05-03            general          TRUE
+#>  year event_id       date               type has_downloads
+#>  2001    10822 2001-11-10            general         FALSE
+#>  2004    12246 2004-10-09            general         FALSE
+#>  2007    13745 2007-11-24            general          TRUE
+#>  2010    15508 2010-08-21            general          TRUE
+#>  2013    17496 2013-09-07            general          TRUE
+#>  2016    20499 2016-07-02 double_dissolution          TRUE
+#>  2019    24310 2019-05-18            general          TRUE
+#>  2022    27966 2022-05-21            general          TRUE
+#>  2025    31496 2025-05-03            general          TRUE
 ```
+
+Results downloads exist from 2007; 2001 and 2004 are listed for reference.
 
 ## House of Representatives
 
