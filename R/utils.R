@@ -7,6 +7,29 @@ aec_cache_dir <- function() {
   d
 }
 
+#' Build a request to the AEC
+#'
+#' The one place requests are built. httr2 sets no transfer timeout, so a
+#' server that accepts the connection and then stalls would hang the session
+#' indefinitely. The curl options abort a connection that takes more than 20
+#' seconds to open, or a transfer that moves less than 1 byte per second for
+#' 60 seconds, while letting slow but progressing downloads finish.
+#'
+#' @keywords internal
+aec_request <- function(url) {
+  req <- httr2::request(url)
+  req <- httr2::req_user_agent(
+    req, "readaec R package (https://github.com/charlescoverdale/readaec)"
+  )
+  req <- httr2::req_options(
+    req, connecttimeout = 20L, low_speed_limit = 1L, low_speed_time = 60L
+  )
+  req <- httr2::req_retry(req, max_tries = 3)
+  # Disable httr2's default error-on-4xx/5xx so we can report the status
+  # code with a readable message instead of a raw httr2 condition
+  httr2::req_error(req, is_error = function(resp) FALSE)
+}
+
 #' Download a file from the AEC, with caching
 #'
 #' Downloads are written to a temporary file first and only moved into the
@@ -22,15 +45,19 @@ aec_download <- function(url, basename, refresh = FALSE) {
     cli::cli_inform("Loading from cache: {basename}")
   } else {
     cli::cli_inform("Downloading from AEC: {basename}")
-    req <- httr2::request(url)
-    req <- httr2::req_user_agent(
-      req, "readaec R package (https://github.com/charlescoverdale/readaec)"
+    resp <- tryCatch(
+      httr2::req_perform(aec_request(url)),
+      httr2_failure = function(e) {
+        cli::cli_abort(
+          c(
+            "Failed to download {basename} from the AEC.",
+            "i" = "The connection failed or stalled: {conditionMessage(e)}",
+            "i" = "URL: {.url {url}}"
+          ),
+          parent = e
+        )
+      }
     )
-    req <- httr2::req_retry(req, max_tries = 3)
-    # Disable httr2's default error-on-4xx/5xx so we can report the status
-    # code with a readable message instead of a raw httr2 condition
-    req <- httr2::req_error(req, is_error = function(resp) FALSE)
-    resp <- httr2::req_perform(req)
 
     if (httr2::resp_status(resp) != 200) {
       cli::cli_abort(

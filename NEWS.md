@@ -1,3 +1,12 @@
+# readaec (development version)
+
+* Downloads now time out instead of hanging. httr2 sets no transfer timeout,
+  so an AEC server that accepted the connection and then stalled would hang
+  the R session indefinitely (and on CRAN, the whole check). Requests now
+  abort after 20 seconds without a connection, or 60 seconds of a stalled
+  transfer, and the failure is reported with the file name and URL. Slow but
+  progressing downloads still finish.
+
 # readaec 0.2.0
 
 ## New data
