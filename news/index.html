@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">readaec</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.0.9000</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -36,6 +36,11 @@
       <small>Source: <a href="https://github.com/charlescoverdale/readaec/blob/main/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="development version" id="readaec-development-version">readaec (development version)<a class="anchor" aria-label="anchor" href="#readaec-development-version"></a></h2>
+<ul><li><p>Downloads now time out instead of hanging. httr2 sets no transfer timeout, so an AEC server that accepted the connection and then stalled would hang the R session indefinitely (and on CRAN, the whole check). Requests now abort after 20 seconds without a connection, or 60 seconds of a stalled transfer, and the failure is reported with the file name and URL. Slow but progressing downloads still finish.</p></li>
+<li><p>The download cache now expires. Cached files were reused forever, so a user who first downloaded a file while the AEC was still counting, or before the AEC revised it, kept the stale copy until they called <code><a href="../reference/clear_cache.html">clear_cache()</a></code> or passed <code>refresh = TRUE</code>. Files older than 30 days are now downloaded again; set <code>options(readaec.cache_ttl = )</code> in hours to change this.</p></li>
+</ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.2.0" id="readaec-020">readaec 0.2.0<a class="anchor" aria-label="anchor" href="#readaec-020"></a></h2><p class="text-muted">CRAN release: 2026-08-02</p>
 <div class="section level3">

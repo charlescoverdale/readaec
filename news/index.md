@@ -1,5 +1,22 @@
 # Changelog
 
+## readaec (development version)
+
+- Downloads now time out instead of hanging. httr2 sets no transfer
+  timeout, so an AEC server that accepted the connection and then
+  stalled would hang the R session indefinitely (and on CRAN, the whole
+  check). Requests now abort after 20 seconds without a connection, or
+  60 seconds of a stalled transfer, and the failure is reported with the
+  file name and URL. Slow but progressing downloads still finish.
+
+- The download cache now expires. Cached files were reused forever, so a
+  user who first downloaded a file while the AEC was still counting, or
+  before the AEC revised it, kept the stale copy until they called
+  [`clear_cache()`](https://charlescoverdale.github.io/readaec/reference/clear_cache.md)
+  or passed `refresh = TRUE`. Files older than 30 days are now
+  downloaded again; set `options(readaec.cache_ttl = )` in hours to
+  change this.
+
 ## readaec 0.2.0
 
 CRAN release: 2026-08-02
