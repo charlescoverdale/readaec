@@ -7,6 +7,28 @@ aec_cache_dir <- function() {
   d
 }
 
+# Cache lifetime in hours, from the readaec.cache_ttl option. Cache files are
+# keyed on the AEC event ID, and results for a completed election rarely
+# change, but the AEC revises files in place during and after a count (and
+# by-election files are published while counting), so a cached copy older
+# than this is fetched again. The default is 30 days.
+aec_cache_ttl <- function() {
+  ttl <- getOption("readaec.cache_ttl", default = 24 * 30)
+  if (!is.numeric(ttl) || length(ttl) != 1L || is.na(ttl) || ttl < 0) {
+    cli::cli_abort(
+      "Option {.code readaec.cache_ttl} must be a single non-negative number of hours."
+    )
+  }
+  ttl
+}
+
+# TRUE if a cache file exists and is younger than the cache TTL.
+aec_cache_fresh <- function(path) {
+  if (!file.exists(path)) return(FALSE)
+  age <- difftime(Sys.time(), file.info(path)$mtime, units = "hours")
+  as.numeric(age) < aec_cache_ttl()
+}
+
 #' Build a request to the AEC
 #'
 #' The one place requests are built. httr2 sets no transfer timeout, so a
@@ -41,7 +63,7 @@ aec_request <- function(url) {
 aec_download <- function(url, basename, refresh = FALSE) {
   cache_file <- file.path(aec_cache_dir(), basename)
 
-  if (file.exists(cache_file) && !refresh) {
+  if (!refresh && aec_cache_fresh(cache_file)) {
     cli::cli_inform("Loading from cache: {basename}")
   } else {
     cli::cli_inform("Downloading from AEC: {basename}")
@@ -90,6 +112,11 @@ aec_fetch <- function(event_id, filename, refresh = FALSE) {
 #'
 #' Deletes all files downloaded and cached by readaec. The next function call
 #' will re-download fresh data from the AEC.
+#'
+#' Cached files are reused for 30 days and then downloaded again. Set
+#' `options(readaec.cache_ttl = )` to a different number of hours to change
+#' this, or pass `refresh = TRUE` to any download function to force a fresh
+#' copy. The cache location can be changed with `options(readaec.cache_dir = )`.
 #'
 #' @return Invisibly returns `NULL`. Called for its side effect of deleting
 #'   cached files.

@@ -14,6 +14,12 @@ cached files.
 Deletes all files downloaded and cached by readaec. The next function call
 will re-download fresh data from the AEC.
 }
+\details{
+Cached files are reused for 30 days and then downloaded again. Set
+\code{options(readaec.cache_ttl = )} to a different number of hours to change
+this, or pass \code{refresh = TRUE} to any download function to force a fresh
+copy. The cache location can be changed with \code{options(readaec.cache_dir = )}.
+}
 \examples{
 \donttest{
 op <- options(readaec.cache_dir = tempdir())

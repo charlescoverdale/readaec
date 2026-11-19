@@ -7,6 +7,13 @@
   transfer, and the failure is reported with the file name and URL. Slow but
   progressing downloads still finish.
 
+* The download cache now expires. Cached files were reused forever, so a
+  user who first downloaded a file while the AEC was still counting, or
+  before the AEC revised it, kept the stale copy until they called
+  `clear_cache()` or passed `refresh = TRUE`. Files older than 30 days are
+  now downloaded again; set `options(readaec.cache_ttl = )` in hours to
+  change this.
+
 # readaec 0.2.0
 
 ## New data
